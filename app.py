@@ -60,7 +60,7 @@ def info():
    return redirect("/author")
 
 @app.route("/lab1/created")
-def cocreatedunter():
+def created():
    return '''
 <!doctype html>
 <html>
