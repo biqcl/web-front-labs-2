@@ -31,7 +31,7 @@ def author():
 def oak():
     path = url_for("static", filename="oak.jpg")
     return '''
-<!DOCTYPE html>
+<!doctype html>>
 <html>
     <body>
         <h1>Дуб</h1>
@@ -39,3 +39,18 @@ def oak():
     </body>
 </html>
 '''
+
+count = 0
+
+@app.route("/lab1/counter")
+def counter():
+    global count
+    count +=1
+    return '''
+<!doctype html>
+<html>
+    <body>
+        Сколько раз вы сюда заходили: '''+ str(count) +'''
+    </body>
+</html>
+    '''
