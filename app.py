@@ -1,6 +1,44 @@
 from flask import Flask, url_for, redirect
 app = Flask(__name__)
 
+@app.route("/")
+@app.route("/index")
+def index():
+   return '''
+<!doctype html>
+<html>
+    <head>
+        <title>НГТУ, ФБ, Лабораторные работы</title>
+        <style>
+            header {
+                padding: 5px;
+                font-size: 12pt; 
+            }
+
+            footer {
+                padding: 5px;
+                text-align: right;
+                position: fixed;
+                bottom: 0px;
+                right: 0px;
+                left: 0px;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            НГТУ, ФБ, WEB-программирование часть 2. Список лабораторных
+        </header>
+
+        <a href="/lab1">Первая лабораторная</a>
+
+        <footer>
+            &copy; Бызова Мария, ФБИ-22, 3 курс, 2024
+        </footer>
+    </body>
+</html>
+'''
+
 @app.route("/lab1/web")
 def web():
     return """<!doctype html>
