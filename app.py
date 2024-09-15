@@ -11,11 +11,15 @@ def index():
         <title>НГТУ, ФБ, Лабораторные работы</title>
         <style>
             header {
+                background-color: #6B2137;
+                color: #F9EEE5;
                 padding: 5px;
                 font-size: 12pt; 
+                text-align: left;
             }
-
             footer {
+                background-color: #6B2137;
+                color: #F9EEE5;
                 padding: 5px;
                 text-align: right;
                 position: fixed;
@@ -23,6 +27,18 @@ def index():
                 right: 0px;
                 left: 0px;
             }
+            body{
+                background-color: #F9EEE5;
+                color: #6B2137;
+                margin: 0px;
+            }            
+            a {
+                padding: 10px;
+                text-decoration: none;
+                color: #D0C360;
+                font-size: 14pt;
+                font-weight: bold;
+            }  
         </style>
     </head>
     <body>
