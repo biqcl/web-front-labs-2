@@ -59,4 +59,14 @@ def counter():
 def info():
    return redirect("/author")
 
-
+@app.route("/lab1/created")
+def cocreatedunter():
+   return '''
+<!doctype html>
+<html>
+    <body>
+        <h1>Создано успешно</h1>
+        <div>Что-то создано...</div>
+    </body>
+</html>
+'''
