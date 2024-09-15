@@ -28,14 +28,14 @@ def index():
                 left: 0px;
             }
             body{
-                background-color: #F9EEE5;
-                color: #6B2137;
+                background-color: #B7D8FF;
+                color: #FFB7B7;
                 margin: 0px;
             }            
             a {
                 padding: 10px;
                 text-decoration: none;
-                color: #D0C360;
+                color: #6B2137;
                 font-size: 14pt;
                 font-weight: bold;
             }  
@@ -74,7 +74,14 @@ def lab1():
             Werkzeug, а также шаблонизатор Jinja2. Относится к категории так
             называемых микрофреймворков — минималистичных каркасов
             веб-приложений, сознательно предоставляющих лишь самые базовые возможности.
-        </div>
+        </div><br>
+        <a href="/lab1/web">web</a><br>
+        <a href="/lab1/author">author</a><br>
+        <a href="/lab1/oak">oak</a><br>
+        <a href="/lab1/counter">counter</a><br>
+        <a href="/lab1/reset">reset</a><br>
+        <a href="/lab1/info">info</a><br>
+        <a href="/lab1/created">created</a><br>
         <a href="/">&#8656;</a>
     </body>
 </html>
