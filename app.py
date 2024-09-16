@@ -4,49 +4,19 @@ app = Flask(__name__)
 @app.route("/")
 @app.route("/index")
 def index():
+   path = url_for("static", filename="styles.css")
    return '''
 <!doctype html>
 <html>
     <head>
         <title>НГТУ, ФБ, Лабораторные работы</title>
-        <style>
-            header {
-                background-color: #6B2137;
-                color: #F9EEE5;
-                padding: 5px;
-                font-size: 12pt; 
-                text-align: left;
-            }
-            footer {
-                background-color: #6B2137;
-                color: #F9EEE5;
-                padding: 5px;
-                text-align: right;
-                position: fixed;
-                bottom: 0px;
-                right: 0px;
-                left: 0px;
-            }
-            body{
-                background-color: #B7D8FF;
-                color: #FFB7B7;
-                margin: 0px;
-            }            
-            a {
-                padding: 10px;
-                text-decoration: none;
-                color: #6B2137;
-                font-size: 14pt;
-                font-weight: bold;
-            }  
-        </style>
+        <link rel="stylesheet" type="text/css" href="''' + path + '''">
     </head>
     <body>
         <header>
             НГТУ, ФБ, WEB-программирование часть 2. Список лабораторных
         </header>
-
-        <a href="/lab1">Первая лабораторная</a>
+        <br><a href="/lab1">&#10023; Первая лабораторная</a>
 
         <footer>
             &copy; Бызова Мария, ФБИ-22, 3 курс, 2024
@@ -56,16 +26,13 @@ def index():
 '''
 @app.route("/lab1")
 def lab1():
+    path = url_for("static", filename="styles.css")
     return '''
 <!doctype html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="''' + path + '''">
         <title>Лабораторная 1</title>
-        <style>
-            a {
-                text-decoration: none;
-            }  
-        </style>
     </head>
     <body>
         <div>
@@ -74,7 +41,7 @@ def lab1():
             Werkzeug, а также шаблонизатор Jinja2. Относится к категории так
             называемых микрофреймворков — минималистичных каркасов
             веб-приложений, сознательно предоставляющих лишь самые базовые возможности.
-        </div><br>
+        </div>
         <a href="/lab1/web">web</a><br>
         <a href="/lab1/author">author</a><br>
         <a href="/lab1/oak">oak</a><br>
@@ -82,6 +49,7 @@ def lab1():
         <a href="/lab1/reset">reset</a><br>
         <a href="/lab1/info">info</a><br>
         <a href="/lab1/created">created</a><br>
+        <a href="/lab1/errors">errors</a><br>
         <a href="/">&#8656;</a>
     </body>
 </html>
@@ -112,7 +80,8 @@ def author():
                <p>Студентка: """ + name + """</p>
                <p>Группа: """ + group + """</p>
                <p>Факультет: """ + faculty + """</p>
-               <a href="/lab1/web">web</a>
+               <a href="/lab1/web">web</a><br>
+               <a href="/lab1">&#8656;</a>
            </body>
         </html>"""
 
@@ -128,7 +97,8 @@ def oak():
     </head>
     <body>
         <h1>Дуб</h1>
-        <img src="'''+ path +'''">
+        <img src="'''+ path +'''"><br>
+        <a href="/lab1">&#8656;</a>
     </body>
 </html>
 '''
@@ -144,6 +114,8 @@ def counter():
 <html>
     <body>
         Сколько раз вы сюда заходили: '''+ str(count) +'''
+        <br><a href="/lab1/reset">Очистить счётчик</a><br>
+        <a href="/lab1">&#8656;</a>
     </body>
 </html>
 '''
@@ -173,6 +145,24 @@ def created():
     <body>
         <h1>Создано успешно</h1>
         <div>Что-то создано...</div>
+        <a href="/lab1">&#8656;</a>
+    </body>
+</html>
+'''
+@app.route("/lab1/errors")
+def errors():
+   return '''
+<!doctype html>
+<html>
+    <body>
+        <a href="/lab1/bad_request">400;</a><br>
+        <a href="/lab1/unauthorized">401;</a><br>
+        <a href="/lab1/payment_required">402;</a><br>
+        <a href="/lab1/forbidden">403;</a><br>
+        <a href="/lab1/not_found">404;</a><br>
+        <a href="/lab1/method_not_allowed">405;</a><br>
+        <a href="/lab1/teapot">418;</a><br>
+        <a href="/lab1">&#8656;</a>
     </body>
 </html>
 '''
@@ -180,3 +170,27 @@ def created():
 @app.errorhandler(404)
 def not_found(err):
     return "Такой страницы не существует...", 404
+
+@app.route("/lab1/bad_request")
+def bad_request():
+    return "Ошибка 400. Неправильный синтаксис", 400
+
+@app.route("/lab1/unauthorized")
+def unauthorized():
+    return "Ошибка 401. Неавторизованный доступ", 401
+
+@app.route("/lab1/payment_required")
+def payment_required():
+    return "Ошибка 402. Требуется оплата", 402
+
+@app.route("/lab1/forbidden")
+def forbidden():
+    return "Ошибка 403. Доступ запрещён", 403
+
+@app.route("/lab1/method_not_allowed")
+def method_not_allowed():
+    return "Ошибка 405. Метод не поддерживается целевым ресурсом", 405
+
+@app.route("/lab1/teapot")
+def teapot():
+    return "Ошибка 418. Сервер не может приготовить кофе, потому что он чайник", 418
