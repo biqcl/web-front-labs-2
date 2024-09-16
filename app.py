@@ -169,7 +169,31 @@ def errors():
 
 @app.errorhandler(404)
 def not_found(err):
-    return "Такой страницы не существует...", 404
+    path = url_for("static", filename="error.jpeg")
+    return '''
+<!doctype html>
+<html>
+    <head>
+        <style>
+            img {
+                width: 55%;
+            }
+            body {
+                color: red;
+                font-weight: bold;
+                font-size: 24pt;
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <p>Такой страницы не существует!! Попробуйте в другой раз :)</p><br>
+        <img src="'''+ path +'''"><br>
+    </body>
+</html>
+''', 404
+
 
 @app.route("/lab1/bad_request")
 def bad_request():
