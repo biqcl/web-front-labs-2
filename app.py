@@ -1,4 +1,4 @@
-from flask import Flask, url_for, redirect
+from flask import Flask, url_for, redirect, render_template
 app = Flask(__name__)
 
 @app.route("/")
@@ -194,7 +194,6 @@ def not_found(err):
 </html>
 ''', 404
 
-
 @app.route("/lab1/bad_request")
 def bad_request():
     return "Ошибка 400. Неправильный синтаксис", 400
@@ -218,3 +217,53 @@ def method_not_allowed():
 @app.route("/lab1/teapot")
 def teapot():
     return "Ошибка 418. Сервер не может приготовить кофе, потому что он чайник", 418
+
+@app.route('/internal_server_error')
+def internal_server_error():
+    result = 10 / 0  
+    return 'Результат: ' + str(result)
+
+@app.errorhandler(500)
+def internal_server(error):
+    return '''<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ошибка сервера</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 90vh;
+            background-color: #f0f0f0;
+        }
+
+        div {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #dc3545;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #6c757d;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Произошла ошибка на сервере.</h1>
+        <p>Извините, но произошла ошибка на сервере. Пожалуйста, попробуйте позже.</p>
+    </div>
+</body>
+</html>''', 500
