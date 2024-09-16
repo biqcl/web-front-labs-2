@@ -55,6 +55,7 @@ def lab1():
             <a href="/lab1/created">created</a><br>
             <a href="/lab1/errors">errors</a><br>
             <a href="/lab1/headers">headers</a><br>
+            <a href="/lab1/teacup">teacup</a><br>
             <a href="/">&#8656;</a>
         </div>
     </body>
@@ -329,3 +330,85 @@ def headers():
     'X-Teapot': 'Tea cup',
     'Content-Language': 'ru-RU'
     }
+
+
+
+
+
+
+
+
+
+
+
+
+teacup_pour = False
+
+@app.route('/lab1/teacup')
+def teacup_status():
+    global teacup_pour
+    status = "Чай налит" if teacup_pour else "Чай ещё не налит"
+    response = f'''
+<!doctype html>
+<html>
+    <body>
+        <h1>{status}</h1>
+        <a href="/lab1/pour">Налить чай</a><br>
+        <a href="/lab1/drink">Выпить чай</a>
+    </body>
+</html>
+'''
+    return response, 200
+
+@app.route('/lab1/pour')
+def create_teacup():
+    global teacup_pour
+    
+    if teacup_pour:
+        return '''
+<!doctype html>
+<html>
+    <body>
+        <p>Стой! Чай же уже налит</p>
+        <a href="/lab1/teacup">&#8656;</a><br>
+    </body>
+</html>
+''', 400
+    else:
+        teacup_pour = True
+        return '''
+<!doctype html>
+<html>
+    <body>
+        <p>Супер! Чай налит</p>
+        <a href="/lab1/teacup">&#8656;</a><br>
+    </body>
+</html>
+''', 201
+
+@app.route('/lab1/drink')
+def delete_teacup():
+    global teacup_pour    
+    if teacup_pour:
+        teacup_pour = False
+        return '''
+<!doctype html>
+<html>
+    <body>
+        <p>Ура! Чай выпит</p>
+        <a href="/lab1/teacup">&#8656;</a><br>
+    </body>
+</html>
+''', 200
+    
+    else:
+        return '''
+<!doctype html>
+<html>
+    <body>
+        <p>Кружка пустая, нужно налить ещё</p>
+        <a href="/lab1/teacup">&#8656;</a><br>
+    </body>
+</html>
+''', 400
+    
