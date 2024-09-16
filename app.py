@@ -51,6 +51,7 @@ def lab1():
         <a href="/lab1/info">info</a><br>
         <a href="/lab1/created">created</a><br>
         <a href="/lab1/errors">errors</a><br>
+        <a href="/lab1/headers">headers</a><br>
         <a href="/">&#8656;</a>
     </body>
 </html>
@@ -240,13 +241,11 @@ def internal_server(error):
                 font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
                 text-align: center;
             }
-
             h1 {
                 color: red;
                 font-weight: bold;
                 font-size: 24pt;                
             }
-
             p {
                 color: grey;
                 font-size: 14pt;
@@ -271,10 +270,19 @@ def headers():
 <head>
     <style>
         img {
-            widh: 100%;
+            width: 100%;
         }
         body {
-            background-color: #B7D8FF;
+            background: linear-gradient(#B7D8FF, #dcffb7);
+            margin: 0;
+        }
+        h1, h2, div {
+            margin: 10px;
+            text-align: justify;
+            color: #042c5e;
+        }
+        h1, h2 {
+            text-align: center;
         }
     </style>
 </head>
@@ -310,7 +318,7 @@ def headers():
             дурном настроении. Жара стояла ужасная. А вместо привычной Айи на зов девочки пришла какая-то совсем незнакомая 
             служанка.
         </div>
-        <img src="'''+ path +'''"><br>
+        <img src="'''+ path +'''">
     </body>
 </html>''', 200, {
     'X-Vector': 'It is me',
