@@ -24,6 +24,7 @@ body{
 }
 div{
     margin: 5px 5px 25px;
+    text-align: justify;
 }
 a {
     padding: 5px;
@@ -32,9 +33,20 @@ a {
     font-size: 14pt;
     font-weight: bold;
 }
-
 a:hover {
     color: #e0b8c2; 
     font-style: oblique;
     text-shadow:  4px 3px 3px #666699d3;
+}
+h2 {
+    margin: 5px 5px 5px;
+    text-align: center;
+}
+div.link {
+    border: 5px dotted #666699;
+    border-radius: 40px;
+    margin: 5px 5px 25px;
+    text-align: center;
+    width: 180px;
+    margin: 0 auto;
 }

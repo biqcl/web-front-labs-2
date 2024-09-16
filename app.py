@@ -37,22 +37,26 @@ def lab1():
     </head>
     <body>
         <div>
-            Flask — фреймворк для создания веб-приложений на языке
+            <b>Flask</b> — фреймворк для создания веб-приложений на языке
             программирования Python, использующий набор инструментов
             Werkzeug, а также шаблонизатор Jinja2. Относится к категории так
             называемых микрофреймворков — минималистичных каркасов
             веб-приложений, сознательно предоставляющих лишь самые базовые возможности.
         </div>
-        <a href="/lab1/web">web</a><br>
-        <a href="/lab1/author">author</a><br>
-        <a href="/lab1/oak">oak</a><br>
-        <a href="/lab1/counter">counter</a><br>
-        <a href="/lab1/reset">reset</a><br>
-        <a href="/lab1/info">info</a><br>
-        <a href="/lab1/created">created</a><br>
-        <a href="/lab1/errors">errors</a><br>
-        <a href="/lab1/headers">headers</a><br>
-        <a href="/">&#8656;</a>
+
+        <h2>Список роутов</h2>
+        <div class="link">
+            <a href="/lab1/web">web</a><br>
+            <a href="/lab1/author">author</a><br>
+            <a href="/lab1/oak">oak</a><br>
+            <a href="/lab1/counter">counter</a><br>
+            <a href="/lab1/reset">reset</a><br>
+            <a href="/lab1/info">info</a><br>
+            <a href="/lab1/created">created</a><br>
+            <a href="/lab1/errors">errors</a><br>
+            <a href="/lab1/headers">headers</a><br>
+            <a href="/">&#8656;</a>
+        </div>
     </body>
 </html>
 '''
@@ -76,7 +80,7 @@ def author():
     name = "Бызова Мария Максимовна"
     group = "ФБИ-22"
     faculty = "ФБ"
-    return '''
+    return """
 <!doctype html>
 <html>
     <body>
@@ -87,7 +91,7 @@ def author():
         <a href="/lab1">&#8656;</a>
     </body>
 </html>
-'''
+"""
 
 @app.route("/lab1/oak")
 def oak():

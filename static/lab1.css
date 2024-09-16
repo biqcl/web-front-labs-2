@@ -4,9 +4,8 @@ body {
     text-align: center;
 }
 
-img {
-    width: 500px; 
-    height: auto; 
+img { 
+    width: 50%;
 }
 
 a {
