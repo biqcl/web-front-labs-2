@@ -8,3 +8,8 @@ img {
     width: 500px; 
     height: auto; 
 }
+
+a {
+    text-decoration: none;
+    color: #073514;
+}
