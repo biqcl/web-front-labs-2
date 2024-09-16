@@ -322,7 +322,8 @@ def headers():
             Так длилось из года в год все девять лет ее жизни, пока не наступило утро, которое Мэри встретила в особенно 
             дурном настроении. Жара стояла ужасная. А вместо привычной Айи на зов девочки пришла какая-то совсем незнакомая 
             служанка.
-        </div>
+        </div><br>
+        <a href="/lab1">&#8656;</a>
         <img src="'''+ path +'''">
     </body>
 </html>''', 200, {
@@ -331,30 +332,24 @@ def headers():
     'Content-Language': 'ru-RU'
     }
 
-
-
-
-
-
-
-
-
-
-
-
 teacup_pour = False
 
 @app.route('/lab1/teacup')
 def teacup_status():
+    style = url_for("static", filename="styles.css")
     global teacup_pour
     status = "Чай налит" if teacup_pour else "Чай ещё не налит"
     response = f'''
 <!doctype html>
-<html>
-    <body>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{style}">
+    </head>
+<html>    
+    <body style="text-align: center;">
         <h1>{status}</h1>
         <a href="/lab1/pour">Налить чай</a><br>
-        <a href="/lab1/drink">Выпить чай</a>
+        <a href="/lab1/drink">Выпить чай</a><br>
+        <a href="/lab1">&#8656;</a>
     </body>
 </html>
 '''
@@ -362,25 +357,51 @@ def teacup_status():
 
 @app.route('/lab1/pour')
 def create_teacup():
+    style = url_for("static", filename="styles.css")
+    path = url_for("static", filename="fullcup400.png")
+    path1 = url_for("static", filename="fullcup201.png")
     global teacup_pour
     
     if teacup_pour:
         return '''
 <!doctype html>
 <html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="''' + style + '''">
+        <style>
+            body {
+                font-weight: bold;
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                text-align: center;
+            }
+        </style>
+    </head>
     <body>
-        <p>Стой! Чай же уже налит</p>
+        <p>Стой! Чай уже налит</p>
+        <img src="'''+ path +'''"><br>
         <a href="/lab1/teacup">&#8656;</a><br>
     </body>
 </html>
 ''', 400
+    
     else:
         teacup_pour = True
         return '''
 <!doctype html>
 <html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="''' + style + '''">
+        <style>
+            body {
+                font-weight: bold;
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                text-align: center;
+            }
+        </style>
+    </head>
     <body>
         <p>Супер! Чай налит</p>
+        <img src="'''+ path1 +'''"><br>
         <a href="/lab1/teacup">&#8656;</a><br>
     </body>
 </html>
@@ -388,14 +409,30 @@ def create_teacup():
 
 @app.route('/lab1/drink')
 def delete_teacup():
-    global teacup_pour    
+    style = url_for("static", filename="styles.css")
+    path = url_for("static", filename="notea200.png")
+    path1 = url_for("static", filename="notea400.png")
+    
+    global teacup_pour 
+       
     if teacup_pour:
         teacup_pour = False
         return '''
 <!doctype html>
 <html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="''' + style + '''">
+        <style>
+            body {
+                font-weight: bold;
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                text-align: center;
+            }
+        </style>
+    </head>
     <body>
         <p>Ура! Чай выпит</p>
+        <img src="'''+ path +'''"><br>
         <a href="/lab1/teacup">&#8656;</a><br>
     </body>
 </html>
@@ -405,8 +442,19 @@ def delete_teacup():
         return '''
 <!doctype html>
 <html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="''' + style + '''">
+        <style>
+            body {
+                font-weight: bold;
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                text-align: center;
+            }
+        </style>
+    </head>
     <body>
         <p>Кружка пустая, нужно налить ещё</p>
+        <img src="'''+ path1 +'''"><br>
         <a href="/lab1/teacup">&#8656;</a><br>
     </body>
 </html>

@@ -50,3 +50,7 @@ div.link {
     width: 180px;
     margin: 0 auto;
 }
+img {
+    width: 30%;
+    text-align: center;
+}
