@@ -1,4 +1,4 @@
-from flask import Flask, url_for, redirect, render_template
+from flask import Flask, url_for, redirect
 app = Flask(__name__)
 
 @app.route("/")
@@ -24,6 +24,7 @@ def index():
     </body>
 </html>
 '''
+
 @app.route("/lab1")
 def lab1():
     path = url_for("static", filename="styles.css")
@@ -57,33 +58,35 @@ def lab1():
 
 @app.route("/lab1/web")
 def web():
-    return """<!doctype html>
-        <html>
-           <body>
-               <h1>web-сервер на flask</h1>
-               <a href="/author">author</a>
-           </body>
-        </html>""", 200, {
-            'X-Server': 'sample',
-            'Content-Type': 'text/plain; charset=utf-8'
-            }
+    return '''
+<!doctype html>
+<html>
+    <body>
+        <h1>web-сервер на flask</h1>
+        <a href="/author">author</a>
+    </body>
+</html>''', 200, {
+    'X-Server': 'sample',
+    'Content-Type': 'text/plain; charset=utf-8'
+    }
 
 @app.route("/lab1/author")
 def author():
     name = "Бызова Мария Максимовна"
     group = "ФБИ-22"
     faculty = "ФБ"
-
-    return """<!doctype html>
-        <html>
-           <body>
-               <p>Студентка: """ + name + """</p>
-               <p>Группа: """ + group + """</p>
-               <p>Факультет: """ + faculty + """</p>
-               <a href="/lab1/web">web</a><br>
-               <a href="/lab1">&#8656;</a>
-           </body>
-        </html>"""
+    return '''
+<!doctype html>
+<html>
+    <body>
+        <p>Студентка: """ + name + """</p>
+        <p>Группа: """ + group + """</p>
+        <p>Факультет: """ + faculty + """</p>
+        <a href="/lab1/web">web</a><br>
+        <a href="/lab1">&#8656;</a>
+    </body>
+</html>
+'''
 
 @app.route("/lab1/oak")
 def oak():
@@ -149,6 +152,7 @@ def created():
     </body>
 </html>
 '''
+
 @app.route("/lab1/errors")
 def errors():
    return '''
@@ -162,6 +166,7 @@ def errors():
         <a href="/lab1/not_found">404;</a><br>
         <a href="/lab1/method_not_allowed">405;</a><br>
         <a href="/lab1/teapot">418;</a><br>
+        <a href="/lab1/internal_server_error">500;</a><br>
         <a href="/lab1">&#8656;</a>
     </body>
 </html>
@@ -218,52 +223,97 @@ def method_not_allowed():
 def teapot():
     return "Ошибка 418. Сервер не может приготовить кофе, потому что он чайник", 418
 
-@app.route('/internal_server_error')
+@app.route('/lab1/internal_server_error')
 def internal_server_error():
     result = 10 / 0  
     return 'Результат: ' + str(result)
 
 @app.errorhandler(500)
 def internal_server(error):
-    return '''<!DOCTYPE html>
-<html lang="ru">
+    return '''
+<!doctype html>
+<html>
+    <head>
+        <style>
+            body {
+                margin-top: 18%;
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                text-align: center;
+            }
+
+            h1 {
+                color: red;
+                font-weight: bold;
+                font-size: 24pt;                
+            }
+
+            p {
+                color: grey;
+                font-size: 14pt;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <h1>На сервере произошла ошибка :(</h1>
+            <p>Попробуйте зайти на страницу позже!!</p>
+        </div>
+    </body>
+</html>
+''', 500
+
+@app.route("/lab1/headers")
+def headers():
+    path = url_for("static", filename="pngegg.png")
+    return '''
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ошибка сервера</title>
     <style>
+        img {
+            widh: 100%;
+        }
         body {
-            font-family: sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 90vh;
-            background-color: #f0f0f0;
-        }
-
-        div {
-            text-align: center;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            color: #dc3545;
-            margin-bottom: 10px;
-        }
-
-        p {
-            color: #6c757d;
-            font-size: 1.2em;
+            background-color: #B7D8FF;
         }
     </style>
 </head>
-<body>
-    <div>
-        <h1>Произошла ошибка на сервере.</h1>
-        <p>Извините, но произошла ошибка на сервере. Пожалуйста, попробуйте позже.</p>
-    </div>
-</body>
-</html>''', 500
+    <body>        
+        <h1>Таинственный сад</h1>
+        <h2>Фрэнсис Элиза Ходжсон Бёрнетт</h2>
+        <div>
+            Когда Мэри Леннокс только что появилась в Мисселтуэйт Мэноре – Йоркширском поместье дяди, выглядела она прескверно,
+            да и вела себя не очень-то хорошо. Вообразите надменную девочку десяти лет с худеньким злым лицом и тщедушным телом,
+            добавьте к этому болезненную желтизну кожи, и вы без труда поймете, почему никого в Мисселтуэйте ее присутствие не 
+            порадовало.
+        </div>
+        <div>
+            До недавнего времени Мэри жила в Индии. Там ее с самого рождения преследовали болезни. Отец Мэри, чиновник 
+            Британского правительственного департамента, тоже часто болел, а в промежутках с головой погружался в работу. 
+            Мать Мэри, в противоположность мужу и дочери, славилась здоровьем, красотой и общительностью. Она часто повторяла,
+            что без общества интересных и веселых людей не выдержала бы в Индии даже дня. Миссис Леннокс совсем не хотела 
+            обременять свою жизнь детьми. Когда же Мэри все-таки появилась на свет, ее тут же препоручили заботам няни-индуски,
+            или, по-местному, Айе. Няне было весьма доходчиво объяснено, что чем реже ребенок будет попадаться на глаза 
+            Мэмсахибе (госпоже), тем больше оценят ее работу. С тех пор девочку держали на расстоянии от родителей. 
+            Мэри росла, стала ходить, заговорила, мало-помалу превращалась во вполне сознательное существо, но родители 
+            так и не приблизили ее к себе.
+        </div>
+        <div>
+            Боясь гнева хозяйки, слуги разрешали девочке делать все, что угодно, только бы та не скандалила. Это не замедлило 
+            принести плоды. К шести годам Мэри стала настоящим тираном и понукала слугами, как могла. Молодая гувернантка, 
+            которую родители выписали для Мэри из Англии, уволилась через три месяца. Другие гувернантки требовали расчета 
+            гораздо скорее. Если бы Мэри в конце концов вдруг не захотелось самой научиться грамоте, вероятнее всего, она 
+            вообще не смогла бы читать и писать.
+        </div>
+        <div>
+            Так длилось из года в год все девять лет ее жизни, пока не наступило утро, которое Мэри встретила в особенно 
+            дурном настроении. Жара стояла ужасная. А вместо привычной Айи на зов девочки пришла какая-то совсем незнакомая 
+            служанка.
+        </div>
+        <img src="'''+ path +'''"><br>
+    </body>
+</html>''', 200, {
+    'X-Vector': 'It is me',
+    'X-Teapot': 'Tea cup',
+    'Content-Language': 'ru-RU'
+    }
