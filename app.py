@@ -460,3 +460,18 @@ def delete_teacup():
 </html>
 ''', 400
     
+
+
+
+
+
+
+
+@app.route('/lab2/a')
+def a():
+    return 'без слэша'
+
+@app.route('/lab2/a/')
+def a2():
+    return 'со слешем'
+
