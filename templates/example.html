@@ -1,25 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Бызова Мария. Лабораторная работа {{ lab_number }}</title>
-    <link rel="stylesheet" href="{{ url_for('static, filename='main.css') }}">
-</head>
-<body>
-    <header>
-        НГТУ, ФБ, WEB-программирование часть 2. Лабораторная работа {{ lab_number }}
-    </header>
-    <main>
-        5 + 2 = {{ 5 + 2 }}<br>
-        11 * 28 = {{ 11 * 28 }}<br>
-        3258 - 759 = {{ 3258 - 759 }}<br>
-        8452 / 793 = {{ 8452 / 793 }}<br>
-        45<sup>8</sup> = {{ 45**8 }}<br>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% if name %} Бызова Мария{% endif %}. Лабораторная работа {{ lab_number }}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    </head>
+    <body>
+        <header>
+            НГТУ, ФБ, WEB-программирование часть 2. {% if lab_number %}Лабораторная работа 2{% endif %}
+        </header>
 
-    </main>
-    <footer>
-        &copy; {{ name }}, {{ group }}, {{ course_number }} курс, 2024
-    </footer>
-</body>
+        <main>
+            5 + 2 = {{ 5 + 2 }}<br>
+            11 * 28 = {{ 11 * 28 }}<br>
+            3258 - 759 = {{ 3258 - 759 }}<br>
+            8452 / 793 = {{ 8452 / 793 }}<br>
+            45<sup>8</sup> = {{ 45**8 }}<br>
+        </main>
+        
+        <footer>
+            &copy;
+        {% if name %} 
+            {{ name }}, 
+        {% else %}
+            Анонимус,
+        {% endif %}
+        {% if group %}
+            {{group}},
+        {% else %}
+            ???,
+        {% endif %}
+        {% if course_number %} 
+            {{course_number}} курс,
+        {% else %}
+            ???,
+        {% endif %} 
+        2024
+        </footer>
+    </body>
 </html>

@@ -477,14 +477,14 @@ def a2():
 
 flower_list = ['Анемон', 'Ранункулюс', 'Пион', 'Мак', 'Фрезия']
 
-@app.route('/lab2/flowers/<int:flower_id>')
+@app.route('/lab2/flowers/<int:flower_id>/')
 def flowers(flower_id):
     if flower_id >= len(flower_list):
         return 'Такого цветка ещё нет', 404
     else:
         return 'Цветок: ' + flower_list[flower_id]
 
-@app.route('/lab2/add_flower/<name>')
+@app.route('/lab2/add_flower/<name>/')
 def add_flower(name):
     flower_list.append(name)
     return f'''
@@ -499,10 +499,10 @@ def add_flower(name):
 </html>
 '''
 
-@app.route('/lab2/example')
+@app.route('/lab2/example/')
 def example():
     name = 'Бызова Мария'
-    lab_number = '2'    
+    lab_number = '26'    
     group = 'ФБИ-22'
     course_number = '3'
     return render_template('example.html', name=name, lab_number=lab_number, group=group, course_number=course_number)
