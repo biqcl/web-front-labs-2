@@ -42,10 +42,12 @@ a:hover {
     font-style: oblique;
     text-shadow:  4px 3px 3px #666699d3;
 }
-/* h2 {
+h1, h2{
     margin: 5px 5px 5px;
-    text-align: center;
-} */
+}
+p{
+    margin-left: 5px;
+}
 /* div.link {
     border: 5px dotted #666699;
     border-radius: 40px;
