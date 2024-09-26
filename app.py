@@ -17,6 +17,7 @@ def index():
             НГТУ, ФБ, WEB-программирование часть 2. Список лабораторных
         </header>
         <br><a href="/lab1">&#10023; Первая лабораторная</a>
+        <br><a href="/lab2">&#10023; Вторая лабораторная</a>
 
         <footer>
             &copy; Бызова Мария, ФБИ-22, 3 курс, 2024
@@ -477,24 +478,71 @@ def a2():
 
 flower_list = ['Анемон', 'Ранункулюс', 'Пион', 'Мак', 'Фрезия']
 
+@app.route('/lab2/flowers/')
+def all_flowers():
+    flowers=flower_list
+    length = len(flower_list)
+    return render_template('flowers.html', flower_list=flowers, length=length)
+
 @app.route('/lab2/flowers/<int:flower_id>/')
 def flowers(flower_id):
+    style = url_for("static", filename="main.css")  
     if flower_id >= len(flower_list):
         return 'Такого цветка ещё нет', 404
     else:
-        return 'Цветок: ' + flower_list[flower_id]
-
+        flower_name = flower_list[flower_id]
+        return f'''
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{style}">
+    </head>
+    <body>
+        <h1>Информация о цветке</h1>
+        <h2>Цветок: {flower_name}</h2>
+        <p>Номер цветка: {flower_id}</p>
+        <a href="/lab2/flowers/">Вернуться к списку цветов</a>
+    </body>
+</html>
+'''
+    
 @app.route('/lab2/add_flower/<name>/')
 def add_flower(name):
+    style = url_for("static", filename="main.css")
     flower_list.append(name)
     return f'''
 <!doctype html>
 <html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{style}">
+    </head>
     <body>
         <h1>Добавлен новый цветок</h1>
         <p>Название нового цветка: {name}</p>
         <p>Всего цветов: {len(flower_list)}</p>
         <p>Полный список: {flower_list}</p>
+        <p><a href="/lab2/flowers/">Вернуться к списку цветов</a></p>
+    </body>
+</html>
+'''
+
+@app.route('/lab2/add_flower/') 
+def no_flower_error():
+    return 'Задайте имя цветка!!!', 400
+
+@app.route('/lab2/clear_flowers/')
+def clear_flowers():
+    style = url_for("static", filename="main.css")
+    flower_list.clear()  
+    return'''
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="''' + style + '''">
+    </head>
+    <body>
+        <h1>Список цветов успешно очищен!</h1>
+        <p><a href="/lab2/flowers/">Вернуться к списку цветов</a></p>
     </body>
 </html>
 '''
