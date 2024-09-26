@@ -47,6 +47,8 @@ h1, h2{
 }
 p{
     margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 /* div.link {
     border: 5px dotted #666699;
