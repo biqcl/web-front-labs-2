@@ -599,4 +599,21 @@ def def_calc():
 def single_number(a):
     return redirect(url_for('calculation', a=a, b=1))
 
+books = [
+    {"author": "Агата Кристи", "title": "Убийство в восточном экспрессе", "genre": "Детектив", "pages": 320},
+    {"author": "Оскар Уайлд", "title": "Портрет Дориана Грея", "genre": "Роман", "pages": 323},
+    {"author": "Стивен Кинг", "title": "11/22/63", "genre": "Фантастика", "pages": 928},
+    {"author": "Рэй Брэдбери", "title": "451 градус по Фаренгейту", "genre": "Научная фантастика", "pages": 174},
+    {"author": "Олдос Хаксли", "title": "О дивный новый мир", "genre": "Антиутопия", "pages": 352},
+    {"author": "Акутагава Рюноске", "title": "Ворота расёмон", "genre": "Фикшн", "pages": 576},
+    {"author": "Уильям Голдинг", "title": "Повилитель мух", "genre": "Проза", "pages": 318},
+    {"author": "Сартр", "title": "Тошнота", "genre": "Роман", "pages": 332},
+    {"author": "Фрэнсис Бёрнетт", "title": "Таинственный сад", "genre": "Зарубежная классика", "pages": 272},
+    {"author": "Франц Кафка", "title": "Превращение", "genre": "Новелла", "pages": 416}
+]
+
+@app.route('/lab2/books/')
+def book():
+    return render_template('books.html', books=books)
+
         
