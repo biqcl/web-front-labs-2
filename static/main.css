@@ -50,6 +50,9 @@ p{
     margin-top: 5px;
     margin-bottom: 5px;
 }
+img {
+    width: 30%;
+}
 /* div.link {
     border: 5px dotted #666699;
     border-radius: 40px;
