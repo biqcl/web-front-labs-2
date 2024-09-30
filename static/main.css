@@ -53,11 +53,11 @@ p{
 img {
     width: 30%;
 }
-/* div.link {
-    border: 5px dotted #666699;
-    border-radius: 40px;
-    margin: 5px 5px 25px;
-    text-align: center;
-    width: 180px;
-    margin: 0 auto;
-} */
+button {
+    cursor: pointer;
+    background-color: #ba9eb5;
+    border: 1.5px solid #666699;
+    border-radius: 5px;
+    color: #666699;
+    margin: 5px;
+}

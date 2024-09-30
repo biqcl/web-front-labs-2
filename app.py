@@ -1,16 +1,18 @@
-from flask import Flask, url_for, redirect, render_template
+from flask import Flask, url_for, redirect, render_template, request
 app = Flask(__name__)
 
 @app.route("/")
 @app.route("/index")
 def index():
    path = url_for("static", filename="styles.css")
+   fav = url_for("static", filename="fav.png")
    return '''
 <!doctype html>
 <html>
     <head>
         <title>НГТУ, ФБ, Лабораторные работы</title>
         <link rel="stylesheet" type="text/css" href="''' + path + '''">
+        <link rel="shortcut icon" href="''' + fav + '''">
     </head>
     <body>
         <header>
@@ -476,7 +478,22 @@ def a():
 def a2():
     return 'со слешем'
 
-flower_list = ['Анемон', 'Ранункулюс', 'Пион', 'Мак', 'Фрезия']
+
+
+
+
+
+
+
+
+
+flower_list = [
+    {'name': 'Анемон', 'price': 100},
+    {'name': 'Ранункулюс', 'price': 150},
+    {'name': 'Пион', 'price': 200},
+    {'name': 'Мак', 'price': 120},
+    {'name': 'Фрезия', 'price': 130}
+]
 
 @app.route('/lab2/flowers/')
 def all_flowers():
@@ -486,66 +503,75 @@ def all_flowers():
 
 @app.route('/lab2/flowers/<int:flower_id>/')
 def flowers(flower_id):
-    style = url_for("static", filename="main.css")  
     if flower_id >= len(flower_list):
         return 'Такого цветка ещё нет', 404
     else:
-        flower_name = flower_list[flower_id]
-        return f'''
-<!doctype html>
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="{style}">
-    </head>
-    <body>
-        <h1>Информация о цветке</h1>
-        <h2>Цветок: {flower_name}</h2>
-        <p>Номер цветка: {flower_id}</p>
-        <a href="/lab2/flowers/">Вернуться к списку цветов</a>
-    </body>
-</html>
-'''
+        flower = flower_list[flower_id]
+    return render_template('flower_detail.html', flower=flower, flower_id=flower_id)    
     
-@app.route('/lab2/add_flower/<name>/')
-def add_flower(name):
-    style = url_for("static", filename="main.css")
-    flower_list.append(name)
-    return f'''
-<!doctype html>
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="{style}">
-    </head>
-    <body>
-        <h1>Добавлен новый цветок</h1>
-        <p>Название нового цветка: {name}</p>
-        <p>Всего цветов: {len(flower_list)}</p>
-        <p>Полный список: {flower_list}</p>
-        <p><a href="/lab2/flowers/">Вернуться к списку цветов</a></p>
-    </body>
-</html>
-'''
+# @app.route('/lab2/add_flower/<name>/<int:price>/')
+# def add_flower(name, price):
+#     flower_list.append({'name': name, 'price': price})
+#     total_flowers = len(flower_list)
+#     return render_template('add_flower.html', name=name, price=price, total_flowers=total_flowers)
 
-@app.route('/lab2/add_flower/') 
-def no_flower_error():
-    return 'Задайте имя цветка!!!', 400
+@app.route('/lab2/add_flower/')
+def add_flower():
+    name = request.args.get('name')
+    price = request.args.get('price')
+    
+    if name and price:  # Проверяем, что данные получены
+        flower_list.append({'name': name, 'price': int(price)})
+        flower_id = len(flower_list) - 1  # Получаем ID нового цветка
+        return redirect(url_for('flowers', flower_id=flower_id))    
+    return "Задайте имя цветка и его цену!!!", 400
+
+
+
+
+
+
+
+
+# @app.route('/lab2/add_flower/') 
+# def no_flower_error():
+#     return 'Задайте имя цветка и его цену!!!', 400
 
 @app.route('/lab2/clear_flowers/')
 def clear_flowers():
-    style = url_for("static", filename="main.css")
     flower_list.clear()  
-    return'''
-<!doctype html>
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="''' + style + '''">
-    </head>
-    <body>
-        <h1>Список цветов успешно очищен!</h1>
-        <p><a href="/lab2/flowers/">Вернуться к списку цветов</a></p>
-    </body>
-</html>
-'''
+    return redirect(url_for('all_flowers'))    
+#     return'''
+# <!doctype html>
+# <html>
+#     <head>
+#         <link rel="stylesheet" type="text/css" href="''' + style + '''">
+#     </head>
+#     <body>
+#         <h1>Список цветов успешно очищен!</h1>
+#         <p><a href="/lab2/flowers/">Вернуться к списку цветов</a></p>
+#     </body>
+# </html>
+# '''
+
+@app.route('/lab2/delete_flower/<int:flower_id>/')
+def delete_flower(flower_id):
+    if flower_id >= len(flower_list):
+        return 404  
+    else:
+        del flower_list[flower_id] 
+        return redirect(url_for('all_flowers'))
+
+
+
+
+
+
+
+
+
+
+
 
 @app.route('/lab2/example/')
 def example():

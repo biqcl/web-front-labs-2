@@ -4,15 +4,25 @@
 
 {% block main %}
     <h1>Список всех цветов:</h1>
-    <p>Всего цветов: {{length}} </p>
+    <p>Всего цветов: {{ length }} </p>
     <p>
         <ul>
-            {% for f in flower_list %}
-                <li>{{f}}</li>
+            {% for flower in flower_list %}
+                <li>
+                    <a href="{{ url_for('flowers', flower_id=loop.index0) }}">{{ flower.name }}</a> - {{ flower.price }} &#8381;
+                    <a href="{{ url_for('delete_flower', flower_id=loop.index0) }}">Удалить</a>
+                </li>      
             {% endfor %}
         </ul>
     </p>
-    <a href="/lab2/add_flower/">Добавить цветок</a><br>
+    
+    <h2>Добавить новый цветок:</h2>
+    <form action="{{ url_for('add_flower') }}">        
+        <input type="text" id="name" name="name" placeholder="Название">        
+        <input type="number" id="price" name="price" placeholder="Цена">
+        <button type="submit">Добавить</button>
+    </form><br>
+
     <a href="/lab2/clear_flowers/">Очистить список</a><br>
     <a href="/lab2/">&#8656;</a>
 {% endblock %}
