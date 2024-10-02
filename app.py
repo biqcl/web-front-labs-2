@@ -478,15 +478,6 @@ def a():
 def a2():
     return 'со слешем'
 
-
-
-
-
-
-
-
-
-
 flower_list = [
     {'name': 'Анемон', 'price': 100},
     {'name': 'Ранункулюс', 'price': 150},
@@ -520,18 +511,11 @@ def add_flower():
     name = request.args.get('name')
     price = request.args.get('price')
     
-    if name and price:  # Проверяем, что данные получены
+    if name and price:  
         flower_list.append({'name': name, 'price': int(price)})
-        flower_id = len(flower_list) - 1  # Получаем ID нового цветка
+        flower_id = len(flower_list) - 1  
         return redirect(url_for('flowers', flower_id=flower_id))    
     return "Задайте имя цветка и его цену!!!", 400
-
-
-
-
-
-
-
 
 # @app.route('/lab2/add_flower/') 
 # def no_flower_error():
@@ -557,21 +541,10 @@ def clear_flowers():
 @app.route('/lab2/delete_flower/<int:flower_id>/')
 def delete_flower(flower_id):
     if flower_id >= len(flower_list):
-        return 404  
+        return 'такого цветка и не было', 404  
     else:
         del flower_list[flower_id] 
         return redirect(url_for('all_flowers'))
-
-
-
-
-
-
-
-
-
-
-
 
 @app.route('/lab2/example/')
 def example():
