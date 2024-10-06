@@ -10,7 +10,7 @@
     <h2>Добро пожаловать на сайт :)</h2>
 
     <div>Ваш возраст: {{ age }}</div>
-    <div>Ваш пол: {{ sex }}</div>
+    <div>Ваш пол: {{'женский' if sex == 'female' else 'мужской' }}</div>
 
     <div>
         <a href="/lab3/form1/">Заново</a>
@@ -34,8 +34,8 @@
         <label>Ваш пол:</label>
         <div>
             <select name="sex">
-                <option value="female">Female</option>
-                <option value="male">Male</option>
+                <option value="female">Женский</option>
+                <option value="male">Мужской</option>
             </select>
         </div>
 
