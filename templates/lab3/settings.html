@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 3{% endblock %}
+
+{% block main %}
+    <h1>Cookies</h1>
+
+    <form>
+        <div>
+            <label for="color">Выберите цвет текста:</label>
+            <input type="color" id="color" name="color" value="{{ color or '#ffcccc' }}">
+        </div>
+
+        <div>
+            <button type="submit">Ok</button>
+        </div>        
+    </form>
+    
+    <form>
+        <div>
+            <label for="color">Выберите цвет фона:</label>
+            <input type="color" id="bgcolor" name="bgcolor" value="{{ bgcolor or '#8c80a6' }}">
+        </div>
+        <div>
+            <button type="submit">Оk</button>
+        </div>
+    </form>
+
+    <form>
+        <div>
+            <label for="fize">Выберите размер шрифта:</label>
+            <input type="number"  min="5" max="50" id="fsize" name="fsize" value="{{ fsize or '14' }}">
+        </div>
+        <div>
+            <button type="submit">Оk</button>
+        </div>
+    </form>
+
+    <form>
+        <div>
+            <p><label for="ffamily">Выберите название шрифта:</label></p>
+            <input type="radio" id="ffamily" name="ffamily" value="{{ 'Candara' }}">
+            <label style="font-family: Candara;">Candara</label> 
+            <input type="radio" id="ffamily" name="ffamily" value="{{ 'Arial Black' }}">
+            <label style="font-family: Arial Black;">Arial Black</label>
+            <input type="radio" id="ffamily" name="ffamily" value="{{ 'BRUSH SCRIPT MT' }}">
+            <label style="font-family: BRUSH SCRIPT MT;">Brush script mt</label>     
+            <input type="radio" id="ffamily2" name="ffamily" value="{{ 'Bookman Old Style' }}">
+            <label style="font-family: Bookman Old Style;">Bookman Old Style</label>
+            <input type="radio" id="ffamily2" name="ffamily" value="{{ 'Courier' }}">
+            <label style="font-family: Courier;">Courier</label>
+            <input type="radio" id="ffamily2" name="ffamily" value="{{ 'franklin gothic medium' }}">
+            <label style="font-family: franklin gothic medium;">Franklin gothic</label>
+            <input type="radio" id="ffamily2" name="ffamily" value="{{ 'Garamond' }}">
+            <label style="font-family: Garamond;">Garamond</label>
+            <input type="radio" id="ffamily2" name="ffamily" value="{{ 'Arial Narrow' }}">
+            <label style="font-family: Arial Narrow;">Didot</label>
+            <input type="radio" id="ffamily2" name="ffamily" value="{{ 'matura mt script capitals' }}">
+            <label style="font-family: matura mt script capitals;">Matura mt</label>
+        </div>
+        
+        <div>
+            <button type="submit">Оk</button>
+        </div>
+    </form>
+
+    <a href="/lab3">&#8656;</a>
+{% endblock %} 

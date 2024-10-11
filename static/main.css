@@ -22,9 +22,9 @@ body{
     margin: 0px;
 }
 main{
-    color: #ffcccc;
+    /* color: #ffcccc; */
     margin: 10px 20px 45px;
-    font-size: 14pt; 
+    /* font-size: 14pt;  */
 }
 div{
     margin: 5px;
