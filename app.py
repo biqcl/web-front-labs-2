@@ -1,4 +1,4 @@
-from flask import Flask, url_for, redirect, render_template, request
+from flask import Flask, url_for
 from lab1 import lab1
 from lab2 import lab2
 from lab3 import lab3
@@ -12,7 +12,7 @@ app.register_blueprint(lab3)
 @app.route("/")
 @app.route("/index")
 def index():
-   path = url_for("static", filename="styles.css")
+   path = url_for("static", filename="main.css")
    fav = url_for("static", filename="fav.png")
    return '''
 <!doctype html>

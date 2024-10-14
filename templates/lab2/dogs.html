@@ -8,7 +8,7 @@
         {% for dog in dogs %}
         <h2>{{ dog.name }}</h2>
         <p>{{ dog.description }}</p>
-        <img src="{{ url_for('static', filename='img/' + dog.image) }}" />
+        <img src="{{ url_for('static', filename='lab2/' + dog.image) }}" />
         {% endfor %}
     </ul>
     <a href="/lab2/">&#8656;</a>

@@ -84,3 +84,11 @@ button {
     width: 280px;
     margin: 0 auto;
 }
+div.link {
+    border: 5px dotted #666699;
+    border-radius: 40px;
+    margin: 5px 5px 25px;
+    text-align: center;
+    width: 180px;
+    margin: 0 auto;
+}

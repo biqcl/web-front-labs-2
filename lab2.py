@@ -24,7 +24,7 @@ flower_list = [
 def all_flowers():
     flowers=flower_list
     length = len(flower_list)
-    return render_template('flowers.html', flower_list=flowers, length=length)
+    return render_template('lab2/flowers.html', flower_list=flowers, length=length)
 
 
 @lab2.route('/lab2/flowers/<int:flower_id>/')
@@ -33,7 +33,7 @@ def flowers(flower_id):
         return 'Такого цветка ещё нет', 404
     else:
         flower = flower_list[flower_id]
-    return render_template('flower_detail.html', flower=flower, flower_id=flower_id)    
+    return render_template('lab2/flower_detail.html', flower=flower, flower_id=flower_id)    
     
 
 # @lab2.route('/lab2/add_flower/<name>/<int:price>/')
@@ -100,19 +100,19 @@ def example():
         {'name': 'манго', 'price': 315},
         {'name': 'персики', 'price': 140},
     ]
-    return render_template('example.html', name=name, lab_number=lab_number, 
+    return render_template('lab2/example.html', name=name, lab_number=lab_number, 
                            group=group, course_number=course_number, fruits=fruits)
 
 
 @lab2.route('/lab2/')
 def lab():
-    return render_template('lab2.html')
+    return render_template('lab2/lab2.html')
 
 
 @lab2.route('/lab2/filters/')
 def filters():
     phrase = 'О <b>сколько</b> <u>нам</u> <i>открытий</i> чудных...'
-    return render_template('filter.html', phrase=phrase)  
+    return render_template('lab2/filter.html', phrase=phrase)  
 
 
 @lab2.route('/lab2/calc/<int:a>/<int:b>/')
@@ -125,7 +125,7 @@ def calculation(a, b):
     divis = a / b if b != 0 else "Делить на ноль нельзя"
     exp = a ** b
 
-    return render_template('calc.html',
+    return render_template('lab2/calc.html',
                            a=a,
                            b=b,
                            add=add,
@@ -137,12 +137,12 @@ def calculation(a, b):
 
 @lab2.route('/lab2/calc/')
 def def_calc():
-    return redirect(url_for('lab2.calculation', a=1, b=1))
+    return redirect(url_for('lab2/lab2.calculation', a=1, b=1))
 
 
 @lab2.route('/lab2/calc/<int:a>/')
 def single_number(a):
-    return redirect(url_for('lab2.calculation', a=a, b=1))
+    return redirect(url_for('lab2/lab2.calculation', a=a, b=1))
 
 books = [
     {"author": "Агата Кристи", "title": "Убийство в восточном экспрессе", "genre": "Детектив", "pages": 320},
@@ -160,7 +160,7 @@ books = [
 
 @lab2.route('/lab2/books/')
 def book():
-    return render_template('books.html', books=books)
+    return render_template('lab2/books.html', books=books)
 
 dogs = [
     {
@@ -193,4 +193,4 @@ dogs = [
 
 @lab2.route('/lab2/dogs/')
 def dogs_woof():
-    return render_template('dogs.html', dogs=dogs)  
+    return render_template('lab2/dogs.html', dogs=dogs)  

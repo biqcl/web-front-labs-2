@@ -4,7 +4,7 @@ lab1 = Blueprint('lab1', __name__)
 
 @lab1.route("/lab1")
 def lab():
-    path = url_for("static", filename="styles.css")
+    path = url_for("static", filename="lab1/styles.css")
     return '''
 <!doctype html>
 <html>
@@ -76,8 +76,8 @@ def author():
 
 @lab1.route("/lab1/oak")
 def oak():
-    path = url_for("static", filename="oak.jpg")
-    path1 = url_for("static", filename="lab1.css")
+    path = url_for("static", filename="lab1/oak.jpg")
+    path1 = url_for("static", filename="lab1/lab1.css")
     return '''
 <!doctype html>
 <html>
@@ -202,7 +202,7 @@ def internal_server_error():
 
 @lab1.route("/lab1/headers")
 def headers():
-    path = url_for("static", filename="pngegg.png")
+    path = url_for("static", filename="lab1/pngegg.png")
     return '''
 <!doctype html>
 <html>
@@ -271,7 +271,7 @@ teacup_pour = False
 
 @lab1.route('/lab1/teacup')
 def teacup_status():
-    style = url_for("static", filename="styles.css")
+    style = url_for("static", filename="lab1/styles.css")
     global teacup_pour
     status = "Чай налит" if teacup_pour else "Чай ещё не налит"
     response = f'''
@@ -293,9 +293,9 @@ def teacup_status():
 
 @lab1.route('/lab1/pour')
 def create_teacup():
-    style = url_for("static", filename="styles.css")
-    path = url_for("static", filename="fullcup400.png")
-    path1 = url_for("static", filename="fullcup201.png")
+    style = url_for("static", filename="lab1/styles.css")
+    path = url_for("static", filename="lab1/fullcup400.png")
+    path1 = url_for("static", filename="lab1/fullcup201.png")
     global teacup_pour
     
     if teacup_pour:
@@ -346,9 +346,9 @@ def create_teacup():
 
 @lab1.route('/lab1/drink')
 def delete_teacup():
-    style = url_for("static", filename="styles.css")
-    path = url_for("static", filename="notea200.png")
-    path1 = url_for("static", filename="notea400.png")
+    style = url_for("static", filename="lab1/styles.css")
+    path = url_for("static", filename="lab1/notea200.png")
+    path1 = url_for("static", filename="lab1/notea400.png")
     
     global teacup_pour 
        
