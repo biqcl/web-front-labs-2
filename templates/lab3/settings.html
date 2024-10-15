@@ -28,7 +28,7 @@
 
     <form>
         <div>
-            <label for="fize">Выберите размер шрифта:</label>
+            <label for="fsize">Выберите размер шрифта:</label>
             <input type="number"  min="5" max="50" id="fsize" name="fsize" value="{{ fsize or '14' }}">
         </div>
         <div>
@@ -61,6 +61,12 @@
         
         <div>
             <button type="submit">Оk</button>
+        </div>
+    </form>
+
+    <form action="/lab3/clear_cookie">
+        <div>
+            <button type="submit">Очистить все куки</button>
         </div>
     </form>
 

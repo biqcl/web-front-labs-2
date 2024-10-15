@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 3{% endblock %}
+
+{% block main %}
+    {% if pass_name and age and departure and destination and date and shelf and luggage is not none and bedding is not none and insurance is not none %}
+    
+    <h1>Здравствуйте, {{ pass_name }}!!</h1>
+    <h2>Детали вашего билета</h2>
+    
+    <br><div>Ваш возраст: {{ age }}</div>
+    <div>Тип билета: {{ ticket_type }}</div>
+    <div>Цена: {{ price }} &#8381</div>
+    <div>Пункт отправления: {{ departure }}</div>
+    <div>Пункт назначения: {{ destination }}</div>
+    <div>Дата поездки: {{ date }}</div>
+
+    {% if shelf == 'lower' %}
+        <div>Тип полки: Нижняя</div>
+    {% elif shelf == 'upper' %}
+        <div>Тип полки: Верхняя</div>
+    {% elif shelf == 'lower_side' %}
+        <div>Тип полки: Нижняя боковая</div>
+    {% elif shelf == 'upper_side' %}
+        <div>Тип полки: Верхняя боковая</div>
+    {% endif %}
+
+    <div>{{ 'С багажом' if luggage else 'Без багажа' }}</div>
+    <div>{{ 'С постельным бельём' if bedding else 'Без постельного белья' }}</div>
+    <div>{{ 'Страховка есть' if insurance else 'Страховки нет' }}</div>
+    
+    <div>
+        <a href="/lab3/form2/">Заполнить заново</a>
+    </div>
+
+    {% else %}
+
+    <h1>Форма железнодорожного билета</h1>
+
+    <form>
+        <label>Ваше имя:</label>
+        <div>
+            <input type="text" placeholder="ФИО пассажира" name="pass_name" value="{{ pass_name or '' }}">
+            <span class="error">{{ errors.pass_name }}</span>
+        </div>
+
+        <label>Ваш возраст:</label>
+        <div>
+            <input type="number" placeholder="Сколько вам лет?" name="age" min="1" max="120" value="{{ age or '' }}">
+            <span class="error">{{ errors.age }}</span>
+        </div>
+
+        <label>Пункт отправления:</label>
+        <div>
+            <input type="text" placeholder="Пункт выезда" name="departure" value="{{ departure or '' }}">
+            <span class="error">{{ errors.departure }}</span>
+        </div>
+
+        <label>Пункт назначения:</label>
+        <div>
+            <input type="text" placeholder="Пункт назначения" name="destination" value="{{ destination or '' }}">
+            <span class="error">{{ errors.destination }}</span>
+        </div>
+
+        <label>Дата поездки:</label>
+        <div>
+            <input type="date" name="date" value="{{ date or '' }}">
+            <span class="error">{{ errors.date }}</span>цй
+        </div>
+
+        <label>Выберите полку:</label>
+        <div>
+            <select name="shelf">
+                <option value="lower" {{ shelf == 'lower' }}>Нижняя</option>
+                <option value="upper" {{ shelf == 'upper' }}>Верхняя</option>
+                <option value="lower_side" {{ shelf == 'lower_side' and 'selected' }}>Нижняя боковая</option>
+                <option value="upper_side" {{ shelf == 'upper_side' and 'selected' }}>Верхняя боковая</option>
+            </select>
+            <span class="error">{{ errors.shelf }}</span>
+        </div>
+
+        <label>Нужно место для багажа?</label>
+        <div>
+            <input type="checkbox" name="luggage">
+        </div>
+
+        <label>Нужно постельное бельё?</label>
+        <div>
+            <input type="checkbox" name="bedding">
+        </div>
+
+        <label>Нужна страховка?</label>
+        <div>
+            <input type="checkbox" name="insurance">
+        </div>
+
+        <div>
+            <button type="submit">Отправить</button>
+        </div>
+    </form>
+
+    {% endif %}
+    <a href="/lab3/">&#8656;</a>
+
+{% endblock %}
+ 

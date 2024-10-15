@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 3{% endblock %}
+
+{% block main %}
+<h1>Результаты поиска</h1>
+
+{% if books %}
+    <table style="padding:10px;">
+            <tr>
+                <th>Автор</th>
+                <th>Название</th>
+                <th>Стоимость</th>
+                <th>Жанр</th>
+            </tr>
+            {% for book in books %}
+            <tr>
+                <td>{{ book.name }}</td>
+                <td>{{ book.bname }}</td>
+                <td style="text-align: center;">{{ book.price }} &#8381</td>
+                <td>{{ book.genre }}</td>
+            </tr>
+            {% endfor %}
+    </table>
+
+{% else %}
+    <p>Товары не найдены.</p>
+{% endif %}
+
+<a href="/lab3/search/">&#8656;</a>
+{% endblock %}
