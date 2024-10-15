@@ -46,10 +46,10 @@
 
         <label>Ваш возраст:</label>
         <div>
-            <input type="number" placeholder="Сколько вам лет?" name="age" min="1" max="120" value="{{ age or '' }}">
+            <input type="number" placeholder="Сколько вам лет?" width="170px" name="age" min="1" max="120" value="{{ age or '' }}">
             <span class="error">{{ errors.age }}</span>
         </div>
-
+ 
         <label>Пункт отправления:</label>
         <div>
             <input type="text" placeholder="Пункт выезда" name="departure" value="{{ departure or '' }}">
@@ -65,7 +65,7 @@
         <label>Дата поездки:</label>
         <div>
             <input type="date" name="date" value="{{ date or '' }}">
-            <span class="error">{{ errors.date }}</span>цй
+            <span class="error">{{ errors.date }}</span>
         </div>
 
         <label>Выберите полку:</label>
@@ -81,17 +81,17 @@
 
         <label>Нужно место для багажа?</label>
         <div>
-            <input type="checkbox" name="luggage">
+            <input type="checkbox" name="luggage">Да
         </div>
 
-        <label>Нужно постельное бельё?</label>
+        <label>Нужно постельное бельё?</label> 
         <div>
-            <input type="checkbox" name="bedding">
+            <input type="checkbox" name="bedding">Да
         </div>
 
-        <label>Нужна страховка?</label>
+        <label>Нужна страховка?</label> 
         <div>
-            <input type="checkbox" name="insurance">
+            <input type="checkbox" name="insurance"> Да
         </div>
 
         <div>
