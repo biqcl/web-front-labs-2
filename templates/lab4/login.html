@@ -5,8 +5,12 @@
 {% block main %}
     {% if authorized %}
         <h1>Добро пожаловать, {{ login }}!</h1>
-        <a href="/lab4/login">&#8656;</a>
-        
+        <div>
+            <form action="/lab4/logout" method="post">
+                <button>Выход</button>
+            </form>
+        </div>
+
     {% else %}
         <h1>Вход</h1>
         <h2>Пожалуйста, авторизуйтесь</h2>
@@ -29,3 +33,4 @@
         <a href="/lab4/">&#8656;</a>
     {% endif %}
 {% endblock %}
+
