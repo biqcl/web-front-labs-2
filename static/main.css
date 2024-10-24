@@ -61,12 +61,10 @@ button {
     margin: 5px;
 }
 .error {
-    color: red;
-    text-align: center;
-    background-color: whitesmoke;
-    border-radius: 5px;
+    color:  #8E1369;
     font-size: 18pt;
     font-weight: bold;
+    text-align: center;
 }
 .drinks {
     border: 5px dotted #666699;
@@ -91,4 +89,22 @@ div.link {
     text-align: center;
     width: 180px;
     margin: 0 auto;
+}
+div.temp {
+    border: 7px double #edfdce;
+    background-color: #6f84ef;
+    border-radius: 40px;
+    padding: 5px 5px 5px;
+    text-align: center;
+    width: 250px;
+    margin: 0 auto;
+    color: #edfdce;
+}
+button.temp {
+    cursor: pointer;
+    background-color: #4350909e;
+    border: 4px double #edfdce;
+    border-radius: 5px;
+    color: #edfdce;
+    margin: 5px;
 }

@@ -136,36 +136,109 @@ def tree():
 
 
 users = [
-    {'login': 'Alex', 'password': '123'},
-    {'login': 'Masha', 'password': '1304'},
-    {'login': 'Ksusha', 'password': '1810'},
-    {'login': 'Bob', 'password': '555'}
+    {'login': 'alex', 'password': '123', 'name': 'Алекс Тёрнер', 'gender': 'Мужской'},
+    {'login': 'bob', 'password': '555', 'name': 'Роберт Дилан', 'gender': 'Мужской'},
+    {'login': 'mar', 'password': '1304', 'name': 'Мария Бызова', 'gender': 'Женский'},
+    {'login': 'ksu', 'password': '1810', 'name': 'Ксения Бызова', 'gender': 'Женский'}
 ]
 
 @lab4.route('/lab4/login/', methods = ['GET', 'POST'])
 def login():
     if request.method == 'GET':
-        if 'login' in session:
+        if 'name' and 'gender' in session:
             authorized = True
-            login = session['login']
+            name = session['name']
+            gender = session['gender']
         else:
             authorized=False
-            login = ''
-        return render_template('/lab4/login.html', authorized=authorized, login=login)
+            name = ''
+            gender = ''
+        return render_template('/lab4/login.html', authorized=authorized, name=name, gender=gender)
     
     login = request.form.get('login')
+    if login == '':
+        error = 'Не введён логин'
+        return render_template('/lab4/login.html', error=error, authorized=False)
+
     password = request.form.get('password')
+    if password == '':
+        error = 'Не введён пароль'
+        return render_template('/lab4/login.html', error=error, authorized=False, login=login)
 
     for user in users:
         if login == user['login'] and password == user['password']:
-            session['login'] = login
+            session['name'] = user['name']
+            session['gender'] = user['gender']
             return redirect('/lab4/login/')
     
-    error = 'неверные логин и/или пароль'
-    return render_template('/lab4/login.html', error=error, authorized=False)
+    error = 'Неверные логин и/или пароль'
+    return render_template('/lab4/login.html', error=error, authorized=False, login=login)
 
 
 @lab4.route('/lab4/logout/', methods = ['POST'])
 def logout():
-    session.pop('login', None)
+    session.pop('name', None)
+    session.pop('gender', None)
     return redirect('/lab4/login/')
+
+
+@lab4.route('/lab4/fridge-form/')
+def fridge_form():
+    return render_template('/lab4/fridge-form.html')
+
+
+@lab4.route('/lab4/fridge/', methods=['POST'])
+def fridge():
+    temperature = request.form.get('temperature')
+
+    if temperature == '':
+        return render_template('/lab4/fridge.html', error='Ошибка: не задана температура')
+
+    temperature = int(temperature)
+
+    if temperature < -12:
+        return render_template('/lab4/fridge.html', error='Не удалось установить температуру — слишком низкое значение')
+    elif temperature > -1:
+        return render_template('/lab4/fridge.html', error='Не удалось установить температуру — слишком высокое значение')
+    else:
+        return render_template('/lab4/fridge.html', temperature=temperature)
+
+
+@lab4.route('/lab4/seed-form/')
+def seed_form():
+    return render_template('/lab4/seed-form.html')
+
+
+@lab4.route('/lab4/seed', methods=['POST'])
+def seed():
+    seed_type = request.form.get('seed')
+    weight = request.form.get('weight')
+
+    if weight == '':
+        return render_template('/lab4/seed-form.html', error='Укажите вес!')
+
+    weight = int(weight)
+
+    if weight <= 0:
+        return render_template('/lab4/seed-form.html', error='Вес должен быть больше 0!')
+
+    if weight > 500:
+        return render_template('/lab4/seed-form.html', error='Такого объёма сейчас нет в наличии :(')
+
+    if seed_type == "ячмень":
+        price_per_ton = 12345
+    elif seed_type == "овёс":
+        price_per_ton = 8522
+    elif seed_type == "пшеница":
+        price_per_ton = 8722
+    else:
+        price_per_ton = 14111
+
+    total_cost = price_per_ton * weight
+
+    discount = 0
+    if weight > 50:
+        discount = total_cost * 0.1
+        total_cost -= discount
+    return render_template('/lab4/seed.html', seed=seed_type, weight=weight, total_cost=total_cost, discount=discount)
+    

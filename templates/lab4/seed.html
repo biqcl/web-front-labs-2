@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 4{% endblock %}
+
+{% block main %}
+    <h1>Заказ зерна</h1>
+    <div style="color: #C7EB93; font-weight: bold; font-size: 16pt;">Заказ успешно оформлен!</div>
+    
+    <div>
+        Вы заказали <span style="color: #C7EB93;">{{ seed }}</span> весом в {{ weight }} тонн.<br>
+        Сумма к оплате: {{ total_cost }} &#8381<br>
+
+        {% if discount %}
+            Скидка за большой объём: {{ discount }} &#8381
+        {% endif %}
+    </div>
+
+    <a href="/lab4/seed-form">Заказать снова</a>
+{% endblock %}

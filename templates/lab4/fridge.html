@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 4{% endblock %}
+
+{% block main %}
+    <h1 style="text-align: center; color: #2D1479;">Холодильник</h1>
+
+    {% if error %}
+        <h2 style="border: 7px double #edfdce; border-radius: 40px; padding: 5px 5px 5px;
+                text-align: center; width: 250px; margin: 0 auto;" class="error">{{ error }}</h2>
+    {% else %}
+        <div class="temp">
+            <h2>Установлена температура: {{ temperature }}°C</h2>
+
+            {% if temperature <= -9 and temperature >= -12 %}
+                <h2>&#x2744;&#xFE0F;&#x2744;&#xFE0F;&#x2744;&#xFE0F;</h2>
+            {% elif temperature <= -5 and temperature >= -8 %}
+                <h2>&#x2744;&#xFE0F;&#x2744;&#xFE0F;</h2>
+            {% elif temperature <= -1 and temperature >= -4 %}
+                <h2>&#x2744;&#xFE0F;</h2>
+            {% endif %}
+        </div>        
+    {% endif %}<br> 
+
+    <a href="/lab4/fridge-form">&#8656;</a>
+{% endblock %}

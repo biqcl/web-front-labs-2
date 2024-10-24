@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 4{% endblock %}
+
+{% block main %}
+<form method="post" action="/lab4/fridge/">
+    <h1 style="text-align: center; color: #2D1479;">Холодильник</h1>
+    
+    <div class="temp">
+        <input type="number" name="temperature" placeholder="Введите температуру">
+        <button class="temp" type="submit">Установить</button>
+    </div>
+</form> 
+
+<a href="/lab4/">&#8656;</a>
+{% endblock %}
