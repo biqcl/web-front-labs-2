@@ -4,8 +4,12 @@
 
 {% block main %}
     {% if authorized %}
-        <h1>Добро пожаловать, {{ name }}!</h1><br>
-        <h2>Ваш пол: {{ gender }}</h2>
+        <h1>Страница пользователя</h1><br>
+        <h2>Добро пожаловать, {{ name }}!</h2>
+        <h3>Ваш пол: {{ gender }}</h3><br>
+
+        <a href="/lab4/users">Посмотреть список пользователей</a>
+
         <div>
             <form action="/lab4/logout" method="post">
                 <button>Выход</button>
@@ -15,23 +19,27 @@
     {% else %}
         <h1>Вход</h1>
         <h2>Пожалуйста, авторизуйтесь</h2>
+
         <form method="post">
             <div>
-                <label for="login">Пользователь:</label>
+                <label>Логин:</label>
                 <input type="text" id="login" name="login" value="{{ login }}">
             </div>
+
             <div>
-                <label for="password">Пароль:</label>
+                <label>Пароль:</label>
                 <input type="password" id="password" name="password" value="{{ password }}">
             </div>
+
             <div class="error">{{ error }}</div>
+
             <div>
                 <button type="submit">Войти</button>
                 <button type="reset">Отмена</button>
             </div>
         </form>
-
+        
+        <a href="/lab4/register">Зарегистрироваться</a><br>
         <a href="/lab4/">&#8656;</a>
     {% endif %}
 {% endblock %}
-
