@@ -195,18 +195,6 @@ def register():
         if not login or not password or not name:
             error = 'Все поля обязательны'
             return render_template('/lab4/register.html', error=error)
-
-        # if login == '':
-        #     error = 'Все поля обязательны'
-        #     return render_template('/lab4/register.html', error=error)
-
-        # if password == '':
-        #     error = 'Все поля обязательны'
-        #     return render_template('/lab4/register.html', error=error)
-
-        # if name == '':
-        #     error = 'Все поля обязательны'
-        #     return render_template('/lab4/register.html', error=error)
             
         for user in users:
             if user['login'] == login:
