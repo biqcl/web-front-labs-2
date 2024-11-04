@@ -109,6 +109,9 @@ def exp():
     if x1 == '' or x2 == '':
         return render_template('/lab4/exp.html', error='Оба поля должны быть заполнены!')
     
+    if x1 == '0' and x2 == '0':
+        return render_template('/lab4/exp.html', error='Ноль нельзя возводить в степень нуля!')
+    
     x1 = int(x1)
     x2 = int(x2)
 
