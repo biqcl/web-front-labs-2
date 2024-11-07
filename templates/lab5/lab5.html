@@ -4,7 +4,13 @@
 
 {% block main %}
     <h1>База знаний</h1>
-    <div>Пользователь: {{ name }}</div>
+    <div>
+        {% if login %}
+            Пользователь: {{ login }}
+        {% else %}
+            Anonymous
+        {% endif %}
+    </div>
     <div>Список сделанных страниц:</div>
     <ol>
         <li>
