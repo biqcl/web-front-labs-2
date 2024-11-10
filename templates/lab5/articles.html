@@ -10,16 +10,16 @@
     {% endif %}
 
     {% for article in articles %}
-        <h2 style="{% if article['is_favorite'] %}color: gold;{% endif %}">{{ article['title'] }}</h2>
+        <h2 style="{% if article['is_favorite'] %}color: #712468; {% endif %}">{{ article['title'] }}</h2>
         <blockquote>{{ article['article_text'] }}</blockquote>
 
         {% if article['is_favorite'] %}
             <form action="{{ url_for('lab5.unfavorite', article_id=article['id']) }}" method="post">
-                <button type="submit" style="font-size: 12pt; color: red;">Убрать из любимых</button>
+                <button type="submit">&#128148;</button>
             </form>
         {% else %}
             <form action="{{ url_for('lab5.favorite', article_id=article['id']) }}" method="post">
-                <button type="submit" style="font-size: 12pt; color: green;">Добавить в любимые</button>
+                <button type="submit">&#128150;</button>
             </form>
         {% endif %}
 

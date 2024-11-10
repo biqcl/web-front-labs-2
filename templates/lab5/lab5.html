@@ -6,19 +6,23 @@
     <h1>База знаний</h1>
     <div>
         {% if login %}
-            Пользователь: {{ login }}
+            <h3>Пользователь: {{ login }}</h3>
+            <form action="/lab5/logout" method="post">
+                <button>Выход</button>
+            </form>
         {% else %}
-            Anonymous
+            <h3>Вы неавторизованы</h3>
+            <form action="/lab5/login" method="post">
+                <button>Вход</button>
+                <form action="/lab5/register" method="post">
+                    <button>Регистрация</button>
+                </form>  
+            </form> 
         {% endif %}
+
+        
     </div>
-    <div>Список сделанных страниц:</div>
-    <ol>
-        <li>
-            <a href="/lab5/login/">вход</a> 
-        </li>   
-        <li>
-            <a href="/lab5/register/">регистрация</a> 
-        </li>
+    <ul> 
         <li>
             <a href="/lab5/list/">список статей</a> 
         </li>
@@ -31,11 +35,10 @@
         <li>
             <a href="/lab5/users/">список пользователей</a> 
         </li>
-    </ol>
+    </ul>
     <div>
-       <form action="/lab5/logout" method="post">
-            <button>Выход</button>
-        </form> 
+               
+                 
     </div>    
     <a href="/index">&#8656;</a>
 {% endblock %}

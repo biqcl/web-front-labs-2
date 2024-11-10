@@ -75,7 +75,7 @@ def login():
     password = request.form.get('password')
 
     if not (login or password):
-        return render_template('lab5/login.html', error='Заполните поля')
+        return render_template('lab5/login.html', error='Заполните все поля')
     
     conn, cur = db_connect()
     if current_app.config['DB_TYPE'] == 'postgres':
