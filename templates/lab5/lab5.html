@@ -13,15 +13,15 @@
         {% else %}
             <h3>Вы неавторизованы</h3>
             <form action="/lab5/login" method="post">
-                <button>Вход</button>
-                <form action="/lab5/register" method="post">
-                    <button>Регистрация</button>
-                </form>  
+                <button>Вход</button>  
             </form> 
+            <form action="/lab5/register" method="post">
+                <button>Регистрация</button>
+            </form>
         {% endif %}
-
         
     </div>
+
     <ul> 
         <li>
             <a href="/lab5/list/">список статей</a> 
@@ -36,9 +36,5 @@
             <a href="/lab5/users/">список пользователей</a> 
         </li>
     </ul>
-    <div>
-               
-                 
-    </div>    
     <a href="/index">&#8656;</a>
 {% endblock %}
