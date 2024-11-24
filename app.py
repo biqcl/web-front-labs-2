@@ -5,6 +5,8 @@ from lab2 import lab2
 from lab3 import lab3
 from lab4 import lab4
 from lab5 import lab5
+from lab6 import lab6
+
 
 app = Flask(__name__)
 
@@ -17,6 +19,7 @@ app.register_blueprint(lab2)
 app.register_blueprint(lab3)
 app.register_blueprint(lab4)
 app.register_blueprint(lab5)
+app.register_blueprint(lab6)
 
 
 @app.route("/")
@@ -41,6 +44,7 @@ def index():
         <br><a href="/lab3">&#10023; Третья лабораторная</a>
         <br><a href="/lab4">&#10023; Четвёртая лабораторная</a>
         <br><a href="/lab5">&#10023; Пятая лабораторная</a>
+        <br><a href="/lab6">&#10023; Шестая лабораторная</a>
 
         <footer>
             &copy; Бызова Мария, ФБИ-22, 3 курс, 2024
