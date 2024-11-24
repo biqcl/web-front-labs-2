@@ -1,10 +1,10 @@
-from flask import  render_template, Blueprint, request, redirect, session, current_app
+from flask import  render_template, Blueprint, request, session
 
 lab6 = Blueprint('lab6', __name__)
 
 offices = []
 for i in range(1, 11):
-    offices.append({"number": i, "tenant": "", "price": 900 + i%3})
+    offices.append({"number": i, "tenant": "", "price": 900 + (i - 1) * 100})
 
 @lab6.route('/lab6/')
 def main():
@@ -17,9 +17,9 @@ def api():
     id = data['id']
     if data['method'] == 'info':
         return {
-            "jsonrpc": "2.0",
-            "result": offices,
-            "id": id
+            'jsonrpc': '2.0',
+            'result': offices,
+            'id': id
         }
     
     login = session.get('login')
@@ -48,6 +48,11 @@ def api():
                     }
                 
                 office['tenant'] = login
+                return {
+                    'jsonrpc': '2.0',
+                    'result': 'success',
+                    'id': id
+                }
 
     if data['method'] == 'cancellation':
         office_number = data['params']
@@ -67,26 +72,24 @@ def api():
                         'jsonrpc': '2.0',
                         'error': {
                             'code': 4,
-                            'message': 'Can`t cancel someone else booking'
+                            'message': 'Cannot cancel someone else booking'
                         },
                         'id': id
                     }
-                
                 office['tenant'] = ''
-
                 return {
                     'jsonrpc': '2.0',
                     'result': 'success',
                     'id': id
-                }        
+                }  
     
     return {
-            "jsonrpc": "2.0",
-            "error": {
+            'jsonrpc': '2.0',
+            'error': {
                 'code': -32601,
                 'message': 'Method not found'
             },
-            "id": id
+            'id': id
         }
 
 
