@@ -20,34 +20,53 @@
             return response.json()
         })      
         .then(function(data) {
-            const office_list = data.result;
+            const office_list = data.result.offices;
             const ul = document.getElementById('office-list');
             ul.innerHTML = '';
-            let totalCost = 0; 
+    
+            const tenantCosts = new Map();
+            let totalCost = 0;
+    
             for(let i = 0; i < office_list.length; i++) {
                 const office = office_list[i];
                 const li = document.createElement('li');
                 li.innerText = office.number + ": " + (office.tenant || 'свободен') + ", Стоимость: " + office.price + " ₽";
-                                
+    
                 const bookingButton = document.createElement('button');
-                bookingButton.innerText = 'зарезервировать';
+                bookingButton.innerText = 'Зарезервировать';
                 bookingButton.onclick = function() {booking(office.number)};
                 li.appendChild(bookingButton);
-
-                if (office.tenant) {
+    
+                if (office.tenant) { // проверка брони офиса
                     const cancellationButton = document.createElement('button');
                     cancellationButton.innerText = 'Освободить';
                     cancellationButton.onclick = function() { cancelBooking(office.number) };
                     li.appendChild(cancellationButton);
+    
+                    let cost = tenantCosts.get(office.tenant) || 0;
+                    cost += office.price;
+                    tenantCosts.set(office.tenant, cost);
+    
                     totalCost += office.price;
                 }
-                
+    
                 ul.appendChild(li);
             }
+    
+            const tenantCostList = document.getElementById('tenant-costs');
+            tenantCostList.innerHTML = '';
+            tenantCosts.forEach((cost, tenant) => {
+                const li = document.createElement('li');
+                li.innerText = `Стоимость аренды для ${tenant}: ${cost} ₽`;
+                tenantCostList.appendChild(li);
+            });
+
             const totalCostElement = document.getElementById('total-cost');
-            totalCostElement.innerText = "Общая стоимость аренды: " + totalCost + " ₽";
+            totalCostElement.innerText = "Общая стоимость забронированных офисов: " + totalCost + " ₽";
+    
         });
     }
+        
 
     function booking(officeNumber) {
         const url = '/lab6/json-rpc-api/';
@@ -132,9 +151,10 @@
 {% endblock %}
 
 {% block main %}
-    <h1>Список кабинетов</h1>    
+    <h1>Список кабинетов</h1>   
     <ul id="office-list"></ul>
-    <div id="total-cost"></div>
+    <div id="total-cost"></div>  
+    <ul id="tenant-costs"></ul>
 
     <a href="/index">&#8656;</a>
 {% endblock %}
