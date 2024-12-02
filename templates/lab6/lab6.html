@@ -37,7 +37,7 @@
                 bookingButton.onclick = function() {booking(office.number)};
                 li.appendChild(bookingButton);
     
-                if (office.tenant) { // проверка брони офиса
+                if (office.tenant) { 
                     const cancellationButton = document.createElement('button');
                     cancellationButton.innerText = 'Освободить';
                     cancellationButton.onclick = function() { cancelBooking(office.number) };
