@@ -1,4 +1,4 @@
-from flask import  render_template, Blueprint, request, jsonify
+from flask import  render_template, Blueprint, request, make_response, jsonify
 lab7 = Blueprint('lab7', __name__)
 
 
@@ -70,4 +70,11 @@ def put_film(id):
     return films[id]
 
 
+@lab7.route('/lab7/rest-api/films/', methods=['POST'])
+def add_film():
+    film = request.get_json() 
+    if not film:
+        return make_response('Нет данных о фильме', 400)
+    films.append(film)  
+    return (len(films) - 1), 201 
 
