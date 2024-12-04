@@ -59,7 +59,6 @@ function deleteFilm(id, title) {
 }
 
 function showModal() {
-    document.getElementById('description-error').innerText = '';
     document.querySelector('div.modal').style.display = 'block';    
 }
 function hideModal() {
@@ -81,10 +80,11 @@ function addFilm() {
 
 function sendFilm() {
     const id = document.getElementById('id').value;
+
     const film = {
-        title: document.getElementById('title').value || "",
         title_ru: document.getElementById('title_ru').value,
-        year: document.getElementById('year').value,
+        title: document.getElementById('title').value || "",        
+        year: parseInt(document.getElementById('year').value),
         description: document.getElementById('description').value 
     }
 
@@ -105,8 +105,17 @@ function sendFilm() {
         return resp.json();
     })
     .then(function(errors) {
-        if(errors.description)
-            document.getElementById('description-error').innerText = errors.description;
+        document.getElementById('title_ru-error').innerText = '';
+        document.getElementById('title-error').innerText = '';        
+        document.getElementById('year-error').innerText = '';
+        document.getElementById('description-error').innerText = '';
+
+        for (const key in errors) {
+            const errorElement = document.getElementById(`${key}-error`);
+            if (errorElement) {
+                errorElement.innerText = errors[key];
+            }
+        }
     })
 }
 
@@ -124,4 +133,3 @@ function editFilm(id) {
         showModal();
     })
 }
-

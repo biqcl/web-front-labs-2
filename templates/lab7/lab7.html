@@ -14,14 +14,14 @@
             color: #ba9eb5;
             width: 300px; 
             left: 55%; 
-            top: 170px;
+            top: 60px;
             margin-left: -200px; 
             position: absolute;
-            padding: 20px; 
+            padding: 15px; 
             text-align: center;
         }
         .error-message {
-            color:  #8E1369;
+            color:  #dcc17a;
             font-weight: bold;
             text-align: center;
         }
@@ -55,17 +55,20 @@
         <label>
             Название фильма на русском:<br>
             <input type="text" id="title_ru">
+            <div id="title_ru-error" class="error-message"></div>
         </label><br>
 
         <label>
             Название фильма в оригинале<br>
             <i>(если фильм русский, то оставьте пустым):</i><br>
             <input type="text" id="title">
+            <div id="title-error" class="error-message"></div>
         </label><br>
 
         <label>
             Год выпуска:<br>
             <input type="number" id="year">
+            <div id="year-error" class="error-message"></div>
         </label><br>
 
         <label>
