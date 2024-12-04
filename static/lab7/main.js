@@ -14,8 +14,13 @@ function fillFilmList() {
             let tdYear = document.createElement('td');
             let tdActions = document.createElement('td');
 
-            tdTitle.innerText = films[i].title == films[i].title_ru ? '' : films[i].title;
             tdTitleRus.innerText = films[i].title_ru;
+                
+            let titleElement = document.createElement('i');
+            titleElement.style.color = '#e0b8c2';
+            titleElement.innerText = films[i].title;
+            tdTitle.appendChild(titleElement);
+
             tdYear.innerText = films [i].year;
 
             let editButton = document.createElement('button');
@@ -33,8 +38,8 @@ function fillFilmList() {
             tdActions.append(editButton); 
             tdActions.append(delButton); 
 
-            tr.append(tdTitle);
             tr.append(tdTitleRus);
+            tr.append(tdTitle);            
             tr.append(tdYear);
             tr.append(tdActions);
 
@@ -77,7 +82,7 @@ function addFilm() {
 function sendFilm() {
     const id = document.getElementById('id').value;
     const film = {
-        title: document.getElementById('title').value,
+        title: document.getElementById('title').value || "",
         title_ru: document.getElementById('title_ru').value,
         year: document.getElementById('year').value,
         description: document.getElementById('description').value 
