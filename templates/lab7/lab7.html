@@ -20,6 +20,11 @@
             padding: 20px; 
             text-align: center;
         }
+        .error-message {
+            color:  #8E1369;
+            font-weight: bold;
+            text-align: center;
+        }
     </style>
 {% endblock %}
 
@@ -66,6 +71,7 @@
         <label>
             Описание:<br>
             <textarea id="description"></textarea>
+            <div id="description-error" class="error-message"></div>
         </label><br>
 
         <button onclick="sendFilm()">Ok</button>
