@@ -1,6 +1,35 @@
-from flask import  render_template, Blueprint, request, jsonify
+import psycopg2
+from psycopg2.extras import RealDictCursor
+import sqlite3
+from os import path
+from flask import  render_template, Blueprint, request, jsonify, current_app
 from datetime import datetime
+
 lab7 = Blueprint('lab7', __name__)
+
+
+def db_connect():
+    if current_app.config['DB_TYPE'] == 'postgres':
+        conn = psycopg2.connect(
+            host = '127.0.0.1',
+            database = 'maria_byzova_knowledge_base',
+            user = 'maria_byzova_knowledge_base',
+            password = '1304'
+        )
+        cur = conn.cursor(cursor_factory = RealDictCursor)
+    else:
+        dir_path = path.dirname(path.realpath(__file__))
+        db_path = path.join(dir_path, "database.db")
+        conn = sqlite3.connect(db_path)
+        conn.row_factory = sqlite3.Row
+        cur = conn.cursor()
+
+    return conn, cur
+
+def db_close(conn, cur):
+    conn.commit()
+    cur.close()
+    conn.close()
 
 
 @lab7.route('/lab7/')
@@ -8,77 +37,61 @@ def main():
     return render_template('lab7/lab7.html')
 
 
-films = [
-    {
-        "title": "What We Do in the Shadows",
-        "title_ru": "Реальные упыри",
-        "year": 2014,
-        "description": "История жизни Виаго, Дикона и Владислава — трёх соседей и по совместительству бессмертных вампиров, которые всего лишь пытаются выжить в современном мире, где есть арендная плата, фейсконтроль в ночных клубах, губительный солнечный свет и другие неприятности."
-    },
-    {
-        "title": "Le Fabuleux destin d'Amélie Poulain",
-        "title_ru": "Амели",
-        "year": 2001,
-        "description": "Знаете ли вы, что все события, происходящие в нашем мире, даже самые незначительные, взаимосвязаны самым удивительным и чудесным образом?"
-    },
-    {
-        "title": "千と千尋の神隠し",
-        "title_ru": "Унесённые призраками",
-        "year": 2001,
-        "description": "Маленькая Тихиро вместе с мамой и папой переезжают в новый дом. Заблудившись по дороге, они оказываются в странном пустынном городе, где их ждет великолепный пир. Родители с жадностью набрасываются на еду и к ужасу девочки превращаются в свиней, став пленниками злой колдуньи Юбабы, властительницы таинственного мира древних богов и могущественных духов."
-    },
-    {
-        "title": "Mamma Mia!",
-        "title_ru": "Мамма Mia!",
-        "year": 2008,
-        "description": "Софи собирается замуж и мечтает, чтобы церемония прошла по всем правилам. Она хочет пригласить на свадьбу отца, чтобы он провёл её к алтарю, но не знает, кто он, так как мать никогда не рассказывала о нём. Софи находит дневник матери, в котором та описывает отношения с тремя мужчинами. Софи решает отправить приглашения всем троим."
-    },
-    {
-        "title": "Ghostbusters",
-        "title_ru": "Охотники за привидениями",
-        "year": 2016,
-        "description": "Тридцать лет назад охотники за привидениями спасли Нью-Йорк от нашествия призраков, но теперь городу вновь угрожает опасность. Былые герои не могут стать на его защиту, но находятся и другие отважные люди, всю свою жизнь посвятившие изучению паранормальных явлений. Эбби Йейтс объединяется с Эрин Гилберт, пожалуй лучшим специалистом в квантовой физике, и вместе они собирают команду новых охотников за привидениями, в которую принимают отличного инженера Джиллиан Хольцман, сотрудницу метрополитена Пэтти Толан, знающую город как свои пять пальцев, и секретаря — настоящего красавчика Кэвина. Вместе они начинают борьбу с нечистой силой, терроризирующей мегаполис..."
-    }
-]
-
-
 @lab7.route('/lab7/rest-api/films/', methods=['GET'])
 def get_films():
+    conn, cur = db_connect()
+    if current_app.config['DB_TYPE'] == 'postgres':
+        cur.execute("SELECT * FROM films ORDER BY id")
+    else:
+        cur.execute("SELECT * FROM films ORDER BY id")
+    films = cur.fetchall()
+    db_close(conn, cur)
     return jsonify(films)
-    
+
 
 @lab7.route('/lab7/rest-api/films/<int:id>/', methods=['GET'])
 def get_film(id):
-    if id < 0 or id >= len(films):
-        return 'Такого фильма нет :(', 404 
-    return films[id]
+    conn, cur = db_connect()
+    if current_app.config['DB_TYPE'] == 'postgres':
+        cur.execute("SELECT * FROM films WHERE id = %s", (id,))
+    else:
+        cur.execute("SELECT * FROM films WHERE id = ?", (id,))
+    film = cur.fetchone()
+    db_close(conn, cur)
+    if film is None:
+        return 'Такого фильма нет :(', 404
+    return jsonify(film)
 
 
 @lab7.route('/lab7/rest-api/films/<int:id>/', methods=['DELETE'])
 def del_film(id):
-    if id < 0 or id >= len(films):
-        return 'Такого фильма нет :(', 404 
-    del films[id]
+    conn, cur = db_connect()
+    if current_app.config['DB_TYPE'] == 'postgres':
+        cur.execute("DELETE FROM films WHERE id = %s", (id,))
+    else:
+        cur.execute("DELETE FROM films WHERE id = ?", (id,))
+    rows_affected = cur.rowcount
+    db_close(conn, cur)
+    if rows_affected == 0:
+        return 'Такого фильма нет :(', 404
     return '', 204
 
 
 @lab7.route('/lab7/rest-api/films/<int:id>/', methods=['PUT'])
 def put_film(id):
-    if id < 0 or id >= len(films):
-        return 'Такого фильма нет :(', 404     
-    film = request.get_json()    
+    conn, cur = db_connect()
+    film = request.get_json()
 
     if 'title_ru' in film and film['title_ru'] and not film['title']:
         film['title'] = film['title_ru']
 
-    errors = {}  
+    errors = {}
 
     if film['title_ru'] == '':
         errors['title_ru'] = 'Заполните название на русском'
 
     if film['title'] == '':
-        errors['title'] = 'Заполните название или добавте название на русском'
-    
+        errors['title'] = 'Заполните название или добавьте название на русском'
 
     if film['year'] == '' or not isinstance(film['year'], (int, float)):
         errors['year'] = 'Заполните год выхода фильма'
@@ -94,20 +107,37 @@ def put_film(id):
             errors['description'] = 'Описание не должно превышать 2000 символов'
 
     if errors:
-        return errors, 400
-    else:    
-        films[id] = film
-        return films[id]
+        db_close(conn, cur)
+        return jsonify(errors), 400
+    else:
+        if current_app.config['DB_TYPE'] == 'postgres':
+            cur.execute("""
+                UPDATE films
+                SET title = %s, title_ru = %s, year = %s, description = %s
+                WHERE id = %s
+            """, (film['title'], film['title_ru'], film['year'], film['description'], id))
+        else:
+            cur.execute("""
+                UPDATE films
+                SET title = ?, title_ru = ?, year = ?, description = ?
+                WHERE id = ?
+            """, (film['title'], film['title_ru'], film['year'], film['description'], id))
+        rows_affected = cur.rowcount
+        db_close(conn, cur)
+        if rows_affected == 0:
+            return 'Такого фильма нет :(', 404
+        return jsonify(film)
 
 
 @lab7.route('/lab7/rest-api/films/', methods=['POST'])
 def add_film():
+    conn, cur = db_connect()
     film = request.get_json()
 
     if film['title_ru'] and not film['title']:
         film['title'] = film['title_ru']
 
-    errors = {}  
+    errors = {}
 
     if film['title_ru'] == '':
         errors['title_ru'] = 'Заполните название на русском'
@@ -130,8 +160,23 @@ def add_film():
             errors['description'] = 'Описание не должно превышать 2000 символов'
 
     if errors:
-        return errors, 400
+        db_close(conn, cur)
+        return jsonify(errors), 400
     else:
-        films.append(film)
-        return {'id': len(films) - 1}, 201 
-    
+        if current_app.config['DB_TYPE'] == 'postgres':
+            cur.execute("""
+                INSERT INTO films (title, title_ru, year, description)
+                VALUES (%s, %s, %s, %s)
+                RETURNING id
+            """, (film['title'], film['title_ru'], film['year'], film['description']))
+            id = cur.fetchone()['id']
+        else:
+            cur.execute("""
+                INSERT INTO films (title, title_ru, year, description)
+                VALUES (?, ?, ?, ?)
+            """, (film['title'], film['title_ru'], film['year'], film['description']))
+            cur.execute("SELECT last_insert_rowid()")
+            id = cur.fetchone()[0]
+        db_close(conn, cur)
+        return jsonify({'id': id}), 201
+        
