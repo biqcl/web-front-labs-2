@@ -59,7 +59,11 @@ function deleteFilm(id, title) {
 }
 
 function showModal() {
-    document.querySelector('div.modal').style.display = 'block';    
+    document.querySelector('div.modal').style.display = 'block'; 
+    document.getElementById('title_ru-error').innerText = '';
+    document.getElementById('title-error').innerText = '';        
+    document.getElementById('year-error').innerText = '';
+    document.getElementById('description-error').innerText = '';   
 }
 function hideModal() {
     document.querySelector('div.modal').style.display = 'none';
@@ -105,11 +109,6 @@ function sendFilm() {
         return resp.json();
     })
     .then(function(errors) {
-        document.getElementById('title_ru-error').innerText = '';
-        document.getElementById('title-error').innerText = '';        
-        document.getElementById('year-error').innerText = '';
-        document.getElementById('description-error').innerText = '';
-
         for (const key in errors) {
             const errorElement = document.getElementById(`${key}-error`);
             if (errorElement) {
