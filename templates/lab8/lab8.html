@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 8{% endblock %}
+
+{% block main %}
+    <h1>База знаний</h1>
+    <div>
+        {% if login %}
+            <h3>Пользователь: {{ login }}</h3>
+            <form action="/lab8/logout" method="post">
+                <button>Выход</button>
+            </form>
+        {% else %}
+            <h3>Вы неавторизованы</h3>
+            <form action="/lab8/login" method="post">
+                <button>Вход</button>  
+            </form> 
+            <form action="/lab8/register" method="post">
+                <button>Регистрация</button>
+            </form>
+        {% endif %}
+        
+    </div>
+
+    <ul> 
+        <li>
+            <a href="/lab8/login/">Вход</a> 
+        </li>
+        <li>
+            <a href="/lab8/register/">Регистрация</a> 
+        </li>
+        <li>
+            <a href="/lab8/articles/">Список статаей</a> 
+        </li>
+        <li>
+            <a href="/lab8/create/">Создать статью</a> 
+        </li>        
+    </ul>
+
+    <a href="/index">&#8656;</a>
+{% endblock %}
