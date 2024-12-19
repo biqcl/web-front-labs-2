@@ -2,6 +2,37 @@
 
 {% block lab %}Лабораторная работа 8{% endblock %}
 
+{% block script %}
+    <style>
+        .button {
+            cursor: pointer;
+            background-color: #ba9eb5;
+            border: 1.5px solid #666699;
+            border-radius: 5px;
+            color: #666699;
+            margin: 5px;
+            padding: 1.6px 5.8px;
+            font-weight: normal;
+            font-size: 10pt;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        a:hover.button {
+            cursor: pointer;
+            background-color: #ba9eb5;
+            border: 1.5px solid #666699;
+            border-radius: 5px;
+            color: #666699;
+            margin: 5px;
+            padding: 1.6px 5.8px;
+            font-weight: normal;
+            font-size: 10pt;
+            font-family: Arial, Helvetica, sans-serif;
+            font-style: normal;
+            text-shadow:  4px 3px 3px #66669900;
+        }
+    </style>
+{% endblock %}
+
 {% block main %}
     <h1>База знаний</h1>
     <div>
@@ -11,24 +42,13 @@
                 <button>Выход</button>
             </form>
         {% else %}
-            <h3>Вы неавторизованы</h3>
-            <form action="/lab8/login" method="post">
-                <button>Вход</button>  
-            </form> 
-            <form action="/lab8/register" method="post">
-                <button>Регистрация</button>
-            </form>
+            <h3>Вы не авторизованы</h3>
+            <a href="/lab8/login/" class="button">Вход</a>
+            <a href="/lab8/register/" class="button">Регистрация</a>
         {% endif %}
-        
     </div>
  
-    <ul> 
-        <li>
-            <a href="/lab8/login/">Вход</a> 
-        </li>
-        <li>
-            <a href="/lab8/register/">Регистрация</a> 
-        </li>
+    <ul>
         <li>
             <a href="/lab8/articles/">Список статаей</a> 
         </li>

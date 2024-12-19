@@ -9,8 +9,6 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import login_user, login_required, current_user, logout_user
 
 
-
-
 lab8 = Blueprint('lab8', __name__)
 
 
@@ -40,7 +38,7 @@ def db_close(conn, cur):
 
 @lab8.route('/lab8/')
 def lab():
-    return render_template('lab8/lab8.html')
+    return render_template('lab8/lab8.html', login=current_user.login if current_user.is_authenticated else None)
 
 
 @lab8.route('/lab8/register/', methods = ['GET', 'POST'])
@@ -54,9 +52,9 @@ def register():
     login_error = ""
     password_error = ""
 
-    if login_form == "":
+    if login_form is None: 
         login_error = "Введите логин!"
-    if password_form =="":
+    if password_form is None: 
         password_error = "Введите пароль!"
 
     if login_error or password_error:
@@ -70,6 +68,9 @@ def register():
     new_user = users(login = login_form, password = password_hash)
     db.session.add(new_user)
     db.session.commit()
+
+    new_user = users.query.filter_by(login=login_form).first()
+    login_user(new_user, remember=False)
     return redirect('/lab8/') 
 
 
@@ -108,7 +109,7 @@ def article_list():
     return "Список статей"
 
 
-@lab8.route('/lab8/logout/')
+@lab8.route('/lab8/logout/', methods=['POST'])
 @login_required
 def logout():
     logout_user()
