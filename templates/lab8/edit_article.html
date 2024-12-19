@@ -34,31 +34,21 @@
 {% endblock %}
 
 {% block main %}
-    <h1>База знаний</h1>
-    <div>
-        {% if login %}
-            <h3>Пользователь: {{ login }}</h3>
-            <form action="/lab8/logout" method="post">
-                <button>Выход</button>
-            </form>
-        {% else %}
-            <h3>Вы не авторизованы</h3>
-            <a href="/lab8/login/" class="button">Вход</a>
-            <a href="/lab8/register/" class="button">Регистрация</a>
-        {% endif %}
-    </div>
- 
-    <ul>
-        <li>
-            <a href="/lab8/all_articles/">Список статаей</a> 
-        </li>
-        <li>
-            <a href="/lab8/articles/">Мои статьи</a> 
-        </li>
-        <li>
-            <a href="/lab8/create_article/">Создать статью</a> 
-        </li>        
-    </ul>
+    <h1>Редактировать статью</h1>
+    <form method="post">
+        <label for="title">Заголовок:</label><br>
+        <input type="text" id="title" name="title" value="{{ article.title }}" required><br><br>
 
-    <a href="/index">&#8656;</a>
+        <label for="article_text">Текст статьи:</label><br>
+        <textarea id="article_text" name="article_text" required>{{ article.article_text }}</textarea><br><br>
+
+        <label for="is_favorite">Добавить в избранное?</label>
+        <input type="checkbox" id="is_favorite" name="is_favorite" {% if article.is_favorite %}checked{% endif %}><br><br>
+
+        <label for="is_public">Сделать публичной?</label>
+        <input type="checkbox" id="is_public" name="is_public" {% if article.is_public %}checked{% endif %}><br><br>
+
+        <button type="submit">Сохранить изменения</button>
+        <a href="/lab8/articles/" class="button">Отмена</a>
+    </form>
 {% endblock %}

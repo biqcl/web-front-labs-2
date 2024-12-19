@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 8{% endblock %}
+
+{% block script %}
+    <script>
+        function confirmDelete(event) {
+            if (confirm("Вы уверены, что хотите удалить эту статью?")) {
+                event.target.parentElement.submit();
+            }
+        }
+    </script>
+
+    <style>
+        .button {
+            cursor: pointer;
+            background-color: #ba9eb5;
+            border: 1.5px solid #666699;
+            border-radius: 5px;
+            color: #666699;
+            margin: 5px;
+            padding: 1.6px 5.8px;
+            font-weight: normal;
+            font-size: 10pt;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        a:hover.button {
+            cursor: pointer;
+            background-color: #ba9eb5;
+            border: 1.5px solid #666699;
+            border-radius: 5px;
+            color: #666699;
+            margin: 5px;
+            padding: 1.6px 5.8px;
+            font-weight: normal;
+            font-size: 10pt;
+            font-family: Arial, Helvetica, sans-serif;
+            font-style: normal;
+            text-shadow:  4px 3px 3px #66669900;
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+    <h1>Список ваших статей</h1>
+
+    <ul>
+        {% for article in articles %}
+        <li>
+            <h2>{{ article.title }}</h2>
+            <div>{{ article.article_text }}</div>
+            <div>Автор: {{ article.user.login }}</div>
+            <div>{% if article.is_favorite %}&#10084;{% else %}&#9825;{% endif %}</div>
+            <div>{% if article.is_public %}Статья находится в публичном доступе{% else %}Статья приватная{% endif %}</div>
+            <div>
+                {% if article.login_id == current_user.id %}
+                    <a href="{{ url_for('lab8.edit_article', article_id=article.id) }}" class="button">Редактировать</a>
+                    <form action="{{ url_for('lab8.delete_article', article_id=article.id) }}" method="POST" style="display:inline;">
+                        <button type="button" onclick="confirmDelete(event)">Удалить</button>
+                    </form>
+                {% endif %}
+            </div>
+        </li><br>
+        {% endfor %}
+    </ul>
+
+    <a href="/lab8/create_article/">Создать статью</a><br>
+    <a href="/lab8/all_articles/">Посмотреть все статьи</a><br>
+    <a href="/lab8/">&#8656;</a>
+{% endblock %}

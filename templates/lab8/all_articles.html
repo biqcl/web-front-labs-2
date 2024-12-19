@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 8{% endblock %}
+
+{% block main %}
+    <h1>Список всех статей</h1>
+
+    <form action="/lab8/search" method="get">
+        <input type="text" name="query" placeholder="Поиск по статьям" required>
+        <button type="submit">Найти</button>
+    </form>
+    
+    <ul>
+        {% for article in articles %}
+        <li>
+            <h2>{{ article.title }}</h2>
+            <div>{{ article.article_text }}</div>
+            <div>Автор: {{ article.user.login }}</div>
+        </li><br>
+        {% endfor %}
+    </ul>
+
+    <a href="/lab8/">&#8656;</a>
+{% endblock %}
