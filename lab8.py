@@ -6,7 +6,7 @@ from flask import  render_template, Blueprint, request, current_app, redirect, s
 from db import db
 from db.models import users, articles
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask_login import login_user, login_required, current_user
+from flask_login import login_user, login_required, current_user, logout_user
 
 
 
@@ -107,3 +107,9 @@ def login():
 def article_list():
     return "Список статей"
 
+
+@lab8.route('/lab8/logout/')
+@login_required
+def logout():
+    logout_user()
+    return redirect('/lab8/')
