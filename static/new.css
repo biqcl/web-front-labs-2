@@ -1,7 +1,7 @@
 header {
     color: #7f9d63;
     padding: 5px;
-    font-size: 13pt; 
+    font-size: 11pt; 
     text-align: left;
     font-weight: lighter;
     position: fixed;
@@ -14,13 +14,13 @@ footer {
     background-color: #0d3a2e;
     color: #7f9d63;
     padding: 5px;
-    font-size: 13pt; 
+    font-size: 11pt; 
     text-align: right;
     position: fixed;
     bottom: 0px;
     right: 0px;
     left: 0px;
-    font-weight: bold;
+    height: 20px;
 }
 
 body {
@@ -36,14 +36,14 @@ body {
 }
 
 main {
-    margin: 10px 20px 45px;
+    margin: 10px 20px 40px;
 }
 
 div.border {
     border: 7px dotted #7f9d63;
     background-color: #0d3a2e7b;
     border-radius: 30px;
-    padding: 10px 25px 25px;
+    padding: 10px 25px 20px;
     text-align: center;
     width: auto;
     max-width: 50%; 
@@ -99,7 +99,7 @@ button {
     border: 1.5px solid #fef689;
     border-radius: 5px;
     color: #fef689;
-    margin: 15px;
+    margin: 5px;
     font-family: 'Bookman Old Style', serif;
 }
 
@@ -110,4 +110,5 @@ input {
     padding: 5px;
     border-radius: 5px;
     font-family: 'Bookman Old Style', serif;
+    font-weight: bold;
 }

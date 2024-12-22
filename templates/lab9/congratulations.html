@@ -10,6 +10,8 @@
         <div style="color: #fef689; font-weight: normal;" >{{ congrats }}</div><br>
         <img src="{{ url_for('static', filename=image) }}" alt="Подарок">
     </div><br>
-
-    <a href="/lab9/">&#8656;</a>
+    
+    <form action="/lab9/reset" method="POST">
+        <button type="submit">Написать поздравление заново</button>
+    </form>
 {% endblock %}

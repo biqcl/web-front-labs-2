@@ -1,9 +1,15 @@
-from flask import  render_template, Blueprint, request, redirect, url_for
+from flask import  render_template, Blueprint, request, redirect, url_for, make_response
 lab9 = Blueprint('lab9', __name__)
 
 
 @lab9.route('/lab9/', methods=['GET', 'POST'])
 def lab():
+    last_congrats = request.cookies.get('last_congrats')
+    last_image = request.cookies.get('last_image')
+
+    if last_congrats and last_image:
+        return render_template('lab9/congratulations.html', congrats=last_congrats, image=last_image)
+
     if request.method == 'POST':
         name = request.form['name']
         return redirect(url_for('lab9.age', name=name))
@@ -100,4 +106,15 @@ def congratulations():
         else:
             congrats = f"Поздравляю вас, дорогой {name}, с наступающим Новым годом! Пусть весь следующий год будет полон новых побед и достижений, удач и приятных событий. Пусть жизнь будет насыщенной и увлекательной! Вот ваш подарок — {gift}!"
 
-    return render_template('lab9/congratulations.html', congrats=congrats, image=image)
+    response = make_response(render_template('lab9/congratulations.html', congrats=congrats, image=image))
+    response.set_cookie('last_congrats', congrats)
+    response.set_cookie('last_image', image)
+    return response
+
+
+@lab9.route('/lab9/reset/', methods=['POST'])
+def reset():
+    response = make_response(redirect(url_for('lab9.lab')))
+    response.delete_cookie('last_congrats')
+    response.delete_cookie('last_image')
+    return response
