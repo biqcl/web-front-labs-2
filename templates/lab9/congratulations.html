@@ -1,0 +1,15 @@
+{% extends "new.html" %}
+
+{% block lab %}Лабораторная работа 9{% endblock %}
+
+
+{% block main %}
+    <div class="border">
+        <h1>Поздравление</h1>
+     
+        <div style="color: #fef689; font-weight: normal;" >{{ congrats }}</div><br>
+        <img src="{{ url_for('static', filename=image) }}" alt="Подарок">
+    </div><br>
+
+    <a href="/lab9/">&#8656;</a>
+{% endblock %}

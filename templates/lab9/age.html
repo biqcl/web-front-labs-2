@@ -5,14 +5,11 @@
 
 {% block main %}
     <div class="border">
-        <h1>Как вас зовут?</h1>
-        
+       <h1>Сколько вам лет?</h1>
+     
         <form method="POST">
-            <input type="text" name="name" required><br>
+            <input type="number" name="age" required><br>
             <button type="submit">Далее</button>
-        </form>
-
+        </form> 
     </div>
-    
-    <br><a href="/index">&#8656;</a>
 {% endblock %}
