@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Бызова Мария. {% block lab %}{% endblock %}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='cinema.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='film.png') }}">
+        {% block script %}{% endblock %}
+    </head>
+
+    <body>
+        <header>
+            НГТУ, ФБ, WEB-программирование часть 2. {{ self.lab() }} 
+        </header>
+
+        <main>
+            {% block main %}{% endblock %}
+        </main>
+        
+        <footer>
+            <a href="/index">&#9734;</a>
+            &copy; Бызова Мария, ФБИ-22, 3 курс, 2024            
+        </footer>
+    </body>
+</html>
