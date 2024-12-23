@@ -1,0 +1,21 @@
+{% extends 'cinema.html' %}
+
+{% block lab %}Расчётно-графическое задание{% endblock %}
+
+{% block main %}
+    <h2>Добавить сеанс</h2>
+
+    <form method="post">
+        <label for="movie_name">Фильм:</label>
+        <input type="text" id="movie_name" name="movie_name" required>
+        <br>
+        <label for="session_date">Дата:</label>
+        <input type="date" id="session_date" name="session_date" required>
+        <br>
+        <label for="session_time">Время:</label>
+        <input type="time" id="session_time" name="session_time" required>
+        <br>
+        <button type="submit">Добавить</button>
+    </form>
+{% endblock %}
+

@@ -1,15 +1,21 @@
 {% extends "cinema.html" %}
 
-{% block lab %}расчётно-графическое задание{% endblock %}
-
-{% block script %}
-<script>
-
-</script>
-{% endblock %}
+{% block lab %}Расчётно-графическое задание{% endblock %}
 
 {% block main %}
     <h1>Кинотеатр</h1>  
 
-    <a href="/index">&#8656;</a>
+    {% if session.get('user_id') %}
+        <p>Добро пожаловать, {{ session.get('user_name') }}!</p>
+        <a href="{{ url_for('rgz.logout') }}">Выйти</a>
+        <br>
+        <a href="{{ url_for('rgz.sessions') }}">Сеансы</a>
+        <br>
+    {% else %}
+        <p>Добро пожаловать на страницу кинотеатра!</p>
+        <a href="{{ url_for('rgz.login') }}">Вход</a>
+        <a href="{{ url_for('rgz.register') }}">Регистрация</a>
+    {% endif %}
+
+    <br><a href="/index">&#8656;</a>
 {% endblock %}

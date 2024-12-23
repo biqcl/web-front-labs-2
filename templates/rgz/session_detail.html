@@ -1,0 +1,122 @@
+{% extends 'cinema.html' %}
+
+{% block lab %}Расчётно-графическое задание{% endblock %}
+
+{% block script %}
+<script>
+    function getBookingList() {
+        const url = '/rgz/api/get_bookings/';
+        const json = {
+            'jsonrpc': '2.0',
+            'method': 'get_bookings',
+            'params': { 'session_id': `{{ session.id }}` },
+            'id': Math.round(Math.random() * 1000)
+        };
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(json)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error.message);
+            } else {
+                renderBookingList(data.result.bookings);
+            }
+        });
+    }
+    
+    function renderBookingList(bookings) {
+        const seatsDiv = document.getElementById('seats');
+        const username = seatsDiv.dataset.username;
+        const session_id = seatsDiv.dataset.sessionid;
+        seatsDiv.innerHTML = '';
+    
+        for (let i = 1; i <= 30; i++) {
+            const booking = bookings.find(b => b.seat_number === i);
+            const div = document.createElement('div');
+            div.innerText = `Место ${i}: `;
+    
+            if (booking) {
+                div.innerText += `Занято пользователем ${booking.user_name}`;
+                if (booking.username === username || username === 'admin') {
+                    const cancelButton = document.createElement('button');
+                    cancelButton.innerText = 'Снять бронь';
+                    cancelButton.onclick = () => cancelBooking(session_id, i);
+                    div.appendChild(cancelButton);
+                }
+            } else {
+                div.innerText += 'Свободно';
+                const bookButton = document.createElement('button');
+                bookButton.innerText = 'Забронировать';
+                bookButton.onclick = () => bookSeat(session_id, i);
+                div.appendChild(bookButton);
+            }
+    
+            seatsDiv.appendChild(div);
+        }
+    }
+    
+    function bookSeat(session_id, seat_number) {
+        const url = '/rgz/api/book/';
+        const json = {
+            'jsonrpc': '2.0',
+            'method': 'book_seat',
+            'params': { 'session_id': session_id, 'seat_number': seat_number },
+            'id': Math.round(Math.random() * 1000)
+        };
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(json)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error.message);
+            } else {
+                getBookingList();
+            }
+        });
+    }
+    
+    function cancelBooking(session_id, seat_number) {
+        const url = '/rgz/api/cancel_booking/';
+        const json = {
+            'jsonrpc': '2.0',
+            'method': 'cancel_booking',
+            'params': { 'session_id': session_id, 'seat_number': seat_number },
+            'id': Math.round(Math.random() * 1000)
+        };
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(json)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error.message);
+            } else {
+                getBookingList();
+            }
+        });
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        getBookingList();
+    });
+</script>
+{% endblock %}
+
+{% block main %}
+    <h2>{{ session['movie_name'] }} - {{ session['session_date'] }} {{ session['session_time'] }}</h2>
+
+    {% if is_past_session %}
+        <p>Этот сеанс уже прошёл. Изменения недоступны.</p>
+    {% endif %}
+
+    <div id="seats" data-username="{{ session_flask.get('username', '') }}" data-sessionid="{{ session.id }}"></div>
+    <br><a href="/rgz/sessions/">&#8656;</a>
+{% endblock %}

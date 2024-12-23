@@ -1,0 +1,33 @@
+{% extends "cinema.html" %}
+
+{% block lab %}расчётно-графическое задание{% endblock %}
+
+{% block main %}
+    <h1>Сеансы</h1>
+
+    {% if session_flask.get('username') == 'admin' %}
+        <a href="{{ url_for('rgz.admin_add_session') }}">Добавить фильм</a>
+        <br>
+    {% endif %}
+
+    <ul>
+        {% for session in sessions %}
+            <li>
+                <a href="{{ url_for('rgz.session_detail', session_id=session.id) }}">
+                    Фильм: {{ session.movie_name }}<br>
+                    Дата: {{ session.session_date }}<br>
+                    Время: {{ session.session_time }}
+                </a>
+
+                {% if session_flask.get('username') == 'admin' %}
+                    <form action="{{ url_for('rgz.admin_delete_session', session_id=session.id) }}" method="post" onsubmit="return confirm('Вы уверены?')">
+                        <button type="submit">Удалить</button>
+                    </form>
+                    <a href="{{ url_for('rgz.admin_edit_session', session_id=session.id) }}">Редактировать</a>
+                {% endif %}
+            </li><br>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('rgz.main') }}">На главную</a>
+{% endblock %}
