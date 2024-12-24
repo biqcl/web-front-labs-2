@@ -3,120 +3,178 @@
 {% block lab %}Расчётно-графическое задание{% endblock %}
 
 {% block script %}
-<script>
-    function getBookingList() {
-        const url = '/rgz/api/get_bookings/';
-        const json = {
-            'jsonrpc': '2.0',
-            'method': 'get_bookings',
-            'params': { 'session_id': `{{ session.id }}` },
-            'id': Math.round(Math.random() * 1000)
-        };
-        fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(json)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                alert(data.error.message);
-            } else {
-                renderBookingList(data.result.bookings);
-            }
-        });
-    }
-    
-    function renderBookingList(bookings) {
-        const seatsDiv = document.getElementById('seats');
-        const username = seatsDiv.dataset.username;
-        const session_id = seatsDiv.dataset.sessionid;
-        seatsDiv.innerHTML = '';
-    
-        for (let i = 1; i <= 30; i++) {
-            const booking = bookings.find(b => b.seat_number === i);
-            const div = document.createElement('div');
-            div.innerText = `Место ${i}: `;
-    
-            if (booking) {
-                div.innerText += `Занято пользователем ${booking.user_name}`;
-                if (booking.username === username || username === 'admin') {
-                    const cancelButton = document.createElement('button');
-                    cancelButton.innerText = 'Снять бронь';
-                    cancelButton.onclick = () => cancelBooking(session_id, i);
-                    div.appendChild(cancelButton);
+    <script>
+        function getBookingList() {
+            const url = '/rgz/api/get_bookings/';
+            const json = {
+                'jsonrpc': '2.0',
+                'method': 'get_bookings',
+                'params': { 'session_id': `{{ session.id }}` },
+                'id': Math.round(Math.random() * 1000)
+            };
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(json)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error.message);
+                } else {
+                    renderBookingList(data.result.bookings);
                 }
-            } else {
-                div.innerText += 'Свободно';
-                const bookButton = document.createElement('button');
-                bookButton.innerText = 'Забронировать';
-                bookButton.onclick = () => bookSeat(session_id, i);
-                div.appendChild(bookButton);
-            }
-    
-            seatsDiv.appendChild(div);
+            });
         }
-    }
-    
-    function bookSeat(session_id, seat_number) {
-        const url = '/rgz/api/book/';
-        const json = {
-            'jsonrpc': '2.0',
-            'method': 'book_seat',
-            'params': { 'session_id': session_id, 'seat_number': seat_number },
-            'id': Math.round(Math.random() * 1000)
-        };
-        fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(json)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                alert(data.error.message);
-            } else {
-                getBookingList();
+        
+        function renderBookingList(bookings) {
+            const seatsDiv = document.getElementById('seats');
+            const username = seatsDiv.dataset.username;
+            const session_id = seatsDiv.dataset.sessionid;
+            const isPastSession = seatsDiv.dataset.pastSession === 'true'; // Проверяем, прошел ли сеанс
+            seatsDiv.innerHTML = '';
+        
+            const rows = 3; 
+            const seatsPerRow = 10; 
+        
+            for (let row = 1; row <= rows; row++) {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'row';
+        
+                for (let seat = 1; seat <= seatsPerRow; seat++) {
+                    const seatNumber = (row - 1) * seatsPerRow + seat;
+                    const booking = bookings.find(b => b.seat_number === seatNumber);
+                    const seatDiv = document.createElement('div');
+                    seatDiv.className = 'seat';
+        
+                    if (booking) {
+                        seatDiv.classList.add('occupied'); 
+                        seatDiv.innerText = `Место ${seatNumber}: Бронь на имя ${booking.user_name}`;
+                        if (!isPastSession && (booking.username === username || username === 'admin')) {
+                            const cancelButton = document.createElement('button');
+                            cancelButton.innerText = 'Снять бронь';
+                            cancelButton.onclick = () => cancelBooking(session_id, seatNumber);
+                            seatDiv.appendChild(cancelButton);
+                        }
+                    } else {
+                        seatDiv.classList.add('free'); 
+                        seatDiv.innerText = `Место ${seatNumber}: Свободно`;
+                        if (!isPastSession) {
+                            const bookButton = document.createElement('button');
+                            bookButton.innerText = 'Забронировать';
+                            bookButton.onclick = () => bookSeat(session_id, seatNumber);
+                            seatDiv.appendChild(bookButton);
+                        }
+                    }
+        
+                    rowDiv.appendChild(seatDiv);
+                }
+        
+                seatsDiv.appendChild(rowDiv);
             }
+        }
+        
+        function bookSeat(session_id, seat_number) {
+            const url = '/rgz/api/book/';
+            const json = {
+                'jsonrpc': '2.0',
+                'method': 'book_seat',
+                'params': { 'session_id': session_id, 'seat_number': seat_number },
+                'id': Math.round(Math.random() * 1000)
+            };
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(json)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error.message);
+                } else {
+                    getBookingList();
+                }
+            });
+        }
+        
+        function cancelBooking(session_id, seat_number) {
+            const url = '/rgz/api/cancel_booking/';
+            const json = {
+                'jsonrpc': '2.0',
+                'method': 'cancel_booking',
+                'params': { 'session_id': session_id, 'seat_number': seat_number },
+                'id': Math.round(Math.random() * 1000)
+            };
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(json)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error.message);
+                } else {
+                    getBookingList();
+                }
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            getBookingList();
         });
-    }
+    </script>
+
+    <style>
+        #seats {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
     
-    function cancelBooking(session_id, seat_number) {
-        const url = '/rgz/api/cancel_booking/';
-        const json = {
-            'jsonrpc': '2.0',
-            'method': 'cancel_booking',
-            'params': { 'session_id': session_id, 'seat_number': seat_number },
-            'id': Math.round(Math.random() * 1000)
-        };
-        fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(json)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                alert(data.error.message);
-            } else {
-                getBookingList();
-            }
-        });
-    }
+        .row {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
     
-    document.addEventListener('DOMContentLoaded', function() {
-        getBookingList();
-    });
-</script>
+        .seat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #3E1222;
+            font-weight: bold;
+            width: 100px;
+            height: 60px; 
+            border-radius: 5px;
+            font-size: 14px;
+            text-align: center;
+            padding: 5px;
+            box-shadow: 5px 2px 4px rgba(0, 0, 0, 0.1); 
+            flex-shrink: 0; /* Предотвращает уменьшение элемента */
+        }    
+        .seat.occupied {
+            background-color: #A66868;
+        }    
+        .seat.free {
+            background-color: #68A691;
+        }
+    </style>
 {% endblock %}
 
 {% block main %}
-    <h2>{{ session['movie_name'] }} - {{ session['session_date'] }} {{ session['session_time'] }}</h2>
+    <h2>{{ session['movie_name'] }}<br> {{ session['session_date'] }} в {{ session['session_time'] }}</h2><br>
 
     {% if is_past_session %}
-        <p>Этот сеанс уже прошёл. Изменения недоступны.</p>
+        <div>Этот сеанс уже прошёл. Изменения недоступны.</div>
     {% endif %}
 
-    <div id="seats" data-username="{{ session_flask.get('username', '') }}" data-sessionid="{{ session.id }}"></div>
+    <div id="seats" 
+         data-username="{{ session_flask.get('username', '') }}" 
+         data-sessionid="{{ session.id }}" 
+         data-past-session="{{ 'true' if is_past_session else 'false' }}">
+    </div>
+
     <br><a href="/rgz/sessions/">&#8656;</a>
 {% endblock %}
