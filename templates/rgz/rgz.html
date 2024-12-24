@@ -9,8 +9,14 @@
         <div class="border">
             <div>Добро пожаловать, {{ session.get('user_name') }}!</div>
 
-        <a href="{{ url_for('rgz.sessions') }}">Посмотреть сеансы</a> <br>
-        <a href="{{ url_for('rgz.logout') }}">&#8656; Выйти из аккаунта</a><br>
+            <a href="{{ url_for('rgz.sessions') }}">Посмотреть сеансы</a> <br>
+            <a href="{{ url_for('rgz.logout') }}">&#8656; Выйти из аккаунта</a><br><br>
+
+            {% if 'user_id' in session %}
+                <form method="post" action="{{ url_for('rgz.delete_account') }}">
+                    <button class="del" type="submit" onclick="return confirm('Вы уверены, что хотите удалить аккаунт?')">Удалить аккаунт</button>
+                </form>
+            {% endif %}
         </div>    
         
     {% else %}

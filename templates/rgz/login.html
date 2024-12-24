@@ -15,11 +15,11 @@
 
             <button type="submit">Войти</button>
         </form> 
+
+        <a href="{{ url_for('rgz.register') }}">Регистрация</a>
     </div>    
 
     {% if error_message %}
         <div class="error_message">{{ error_message }}</div>
     {% endif %}
-
-    <a href="{{ url_for('rgz.register') }}">Регистрация</a>
 {% endblock %}
