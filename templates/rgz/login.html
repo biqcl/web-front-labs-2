@@ -3,20 +3,22 @@
 {% block lab %}Расчётно-графическое задание{% endblock %}
 
 {% block main %}
-    <h2>Вход</h2>
+    <h1>Вход</h1>
 
-    <form method="post">
-        <label for="username">Логин:</label>
-        <input type="text" id="username" name="username" required>
-        <br>
-        <label for="password">Пароль:</label>
-        <input type="password" id="password" name="password" required>
-        <br>
-        <button type="submit">Войти</button>
-    </form>
+    <div class="border">
+       <form method="post">
+            <label>Логин:</label>
+            <br><input type="text" id="username" name="username" required><br>
+
+            <label>Пароль:</label>
+            <br><input type="password" id="password" name="password" required><br>
+
+            <button type="submit">Войти</button>
+        </form> 
+    </div>    
 
     {% if error_message %}
-        <p>{{ error_message }}</p>
+        <div class="error_message">{{ error_message }}</div>
     {% endif %}
 
     <a href="{{ url_for('rgz.register') }}">Регистрация</a>

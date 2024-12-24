@@ -3,22 +3,25 @@
 {% block lab %}Расчётно-графическое задание{% endblock %}
 
 {% block main %}
-    <h2>Регистрация</h2>
+    <h1>Регистрация</h1>
 
-    <form method="post">
-        <label for="name">Имя:</label>
-        <input type="text" id="name" name="name" required>
-        <br>
-        <label for="username">Логин:</label>
-        <input type="text" id="username" name="username" required>
-        <br>
-        <label for="password">Пароль:</label>
-        <input type="password" id="password" name="password" required>
-        <br>
-        <button type="submit">Зарегистрироваться</button>
-    </form>
+    <div class="border">
+        <form method="post">       
+            <label>Имя:</label>
+            <br><input type="text" id="name" name="name" required><br>
+
+            <label>Логин:</label>
+            <br><input type="text" id="username" name="username" required><br>
+
+            <label>Пароль:</label>
+            <br><input type="password" id="password" name="password" required><br>
+
+            <button type="submit">Зарегистрироваться</button>
+        </form>
+    </div>    
 
     {% if error_message %}
-        <p>{{ error_message }}</p>
+        <div class="error_message">{{ error_message }}</div>
     {% endif %}
+    <a href="/rgz/">&#8656;</a>
 {% endblock %}

@@ -401,17 +401,11 @@ def delete_session(session_id):
         return redirect(url_for('rgz.login'))
     conn, cur = db_connect()
     cur.execute("SELECT * FROM sessions WHERE id = %s", (session_id,))
-    session_data = cur.fetchone()  # Переменная для данных о сеансе
+    session_data = cur.fetchone()
 
     if not session_data:
         db_close(conn, cur)
         return "Session not found", 404
-
-    # Проверка, что сеанс ещё не прошёл
-    session_datetime = datetime.strptime(f"{session_data['session_date']} {session_data['session_time']}", "%Y-%m-%d %H:%M:%S")
-    if session_datetime < datetime.now():
-        db_close(conn, cur)
-        return redirect(url_for('rgz.session_detail', session_id=session_id))
 
     cur.execute("DELETE FROM sessions WHERE id = %s", (session_id,))
     db_close(conn, cur)

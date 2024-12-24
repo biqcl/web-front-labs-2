@@ -31,7 +31,7 @@
             const seatsDiv = document.getElementById('seats');
             const username = seatsDiv.dataset.username;
             const session_id = seatsDiv.dataset.sessionid;
-            const isPastSession = seatsDiv.dataset.pastSession === 'true'; // Проверяем, прошел ли сеанс
+            const isPastSession = seatsDiv.dataset.pastSession === 'true'; 
             seatsDiv.innerHTML = '';
         
             const rows = 3; 
@@ -98,6 +98,16 @@
         }
         
         function cancelBooking(session_id, seat_number) {
+            const seatsDiv = document.getElementById('seats');
+            const username = seatsDiv.dataset.username;
+
+            if (username === 'admin') {
+                const isConfirmed = confirm(`Вы уверены, что хотите снять бронь с места ${seat_number}?`);
+                if (!isConfirmed) {
+                    return;
+                }
+            }
+            
             const url = '/rgz/api/cancel_booking/';
             const json = {
                 'jsonrpc': '2.0',

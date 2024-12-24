@@ -27,6 +27,7 @@ main{
 }
 div{
     margin: 5px;
+    font-size: 14pt;
 }
 a {
     padding: 5px;
@@ -42,14 +43,6 @@ h1, h2, h3{
     margin: 5px 5px 5px;
     text-align: center;
 }
-p{
-    margin-left: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-img {
-    width: 30%;
-}
 button {
     cursor: pointer;
     background-color: #8E1369;
@@ -58,12 +51,43 @@ button {
     color: #E5E064;
     margin: 5px;
     font-family: 'Candara';
+    padding-bottom: 2px;
+}
+.button {
+    cursor: pointer;
+    background-color: #8E1369;
+    border: 1.5px solid #E5E064;
+    border-radius: 5px;
+    color: #E5E064;
+    margin: 5px;
+    font-family: 'Candara';
+    padding: 1.6px 5.8px;
+    font-weight: normal;
+    font-size: 10pt;
+}
+input {
+    color: #EFC7C2;
+    background-color: #6D213C;
+    border: 1.5px solid #EFC7C2;
+    padding: 5px;
+    border-radius: 5px;
+    font-family: 'Candara';
+    font-weight: bold;
+    margin: 5px;
 }
 .error_message {
-    color:  #8E1369;
-    font-size: 18pt;
+    color:  #E5E064;
+    font-size: 14pt;
     font-weight: bold;
     text-align: center;
 }
-
-
+div.border {
+    border: 5px double #A96981;
+    background-color: #3e1222a6;
+    border-radius: 30px;
+    padding: 10px 25px 20px;
+    text-align: center;
+    width: 300px;
+    margin-top: 25px;
+    margin-left: 35%;
+}

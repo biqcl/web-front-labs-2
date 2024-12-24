@@ -2,32 +2,44 @@
 
 {% block lab %}расчётно-графическое задание{% endblock %}
 
+{% block script %}
+    <script>
+        function confirmDelete(movieName) {
+            return confirm(`Вы уверены, что хотите удалить сеанс "${movieName}"?`);
+        }
+    </script>
+{% endblock %}
+
 {% block main %}
     <h1>Сеансы</h1>
 
     {% if session_flask.get('username') == 'admin' %}
-        <a href="{{ url_for('rgz.admin_add_session') }}">Добавить фильм</a>
-        <br>
+        <a href="{{ url_for('rgz.admin_add_session') }}">Добавить сеанс</a><br>
     {% endif %}
 
     <ul>
         {% for session in sessions %}
             <li>
-                <a href="{{ url_for('rgz.session_detail', session_id=session.id) }}">
-                    Фильм: {{ session.movie_name }}<br>
-                    Дата: {{ session.session_date }}<br>
-                    Время: {{ session.session_time }}
-                </a>
+                <div>
+                    <a href="{{ url_for('rgz.session_detail', session_id=session.id) }}">
+                        {{ session.movie_name }}                      
+                    </a><br>
+
+                    <diV style="color: #A96981; font-size: 13pt;">
+                        Дата: {{ session.session_date }}<br>
+                        Время: {{ session.session_time }}
+                    </diV>
+                </div>
 
                 {% if session_flask.get('username') == 'admin' %}
-                    <form action="{{ url_for('rgz.admin_delete_session', session_id=session.id) }}" method="post" onsubmit="return confirm('Вы уверены?')">
+                    <form action="{{ url_for('rgz.admin_delete_session', session_id=session.id) }}" method="post" onsubmit="return confirmDelete('{{ session.movie_name }}')">
                         <button type="submit">Удалить</button>
-                    </form>
-                    <a href="{{ url_for('rgz.admin_edit_session', session_id=session.id) }}">Редактировать</a>
+                        <a href="{{ url_for('rgz.admin_edit_session', session_id=session.id) }}" class="button">Редактировать</a>
+                    </form>                    
                 {% endif %}
             </li><br>
         {% endfor %}
     </ul>
 
-    <a href="{{ url_for('rgz.main') }}">На главную</a>
+    <a href="{{ url_for('rgz.main') }}">&#8656;</a>
 {% endblock %}
